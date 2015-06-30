@@ -1,0 +1,365 @@
+{
+    "ace": {
+        "search": {
+            "@backwards": "false",
+            "@highlightmatches": "true",
+            "@matchcase": "false",
+            "@preservecase": "false",
+            "@regex": "false",
+            "@wholeword": "false",
+            "@wraparound": "true"
+        }
+    },
+    "console": {
+        "@expanded": false,
+        "@height": "153",
+        "@maximized": "false",
+        "json()": {
+            "meta": {
+                "accessList": [
+                    "tab20",
+                    "tab0"
+                ]
+            },
+            "name": "pane1",
+            "nodes": [
+                {
+                    "type": "tab",
+                    "name": "tab0",
+                    "path": null,
+                    "className": [
+                        "tab0"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1435318149076
+                        },
+                        "filter": true,
+                        "title": "Terminal",
+                        "terminal": {
+                            "id": "devel_438",
+                            "cwd": "",
+                            "width": 0,
+                            "height": 0
+                        }
+                    },
+                    "editorType": "terminal",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab20",
+                    "path": null,
+                    "className": [
+                        "tab20"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {},
+                        "filter": true,
+                        "title": "Immediate (Javascript (browser))",
+                        "tooltip": "Immediate (Javascript (browser))",
+                        "immediate": {
+                            "type": "jsbrowser",
+                            "history": [],
+                            "pos": 0
+                        }
+                    },
+                    "editorType": "immediate",
+                    "active": true
+                }
+            ],
+            "skin": "editor_tab",
+            "skinset": "default",
+            "type": "pane"
+        }
+    },
+    "ext": {
+        "counters": {
+            "@ace": 6,
+            "@acestatus": 5,
+            "@divider": 4,
+            "@document": 29,
+            "@form": 4,
+            "@immediate": 1,
+            "@menu": 5,
+            "@menuitem": 13,
+            "@pane": 5,
+            "@session": 29,
+            "@tab": 26,
+            "@undoManager": 29
+        }
+    },
+    "findinfiles": {
+        "@console": "true",
+        "@matchcase": "false",
+        "@regex": "false",
+        "@wholeword": "false"
+    },
+    "menus": {
+        "@minimized": "false"
+    },
+    "nak": {
+        "@installed": true
+    },
+    "panecycle": {
+        "json()": [
+            "tab22",
+            "tab25",
+            "tab20"
+        ]
+    },
+    "panels": {
+        "@active-left": "tree",
+        "@width-left": 278,
+        "commands.panel": {
+            "@enabled": "true",
+            "@name": "commands.panel"
+        },
+        "debugger": {
+            "@enabled": "true",
+            "@name": "debugger"
+        },
+        "navigate": {
+            "@enabled": "true",
+            "@name": "navigate"
+        },
+        "outline": {
+            "@enabled": "true",
+            "@name": "outline"
+        },
+        "tree": {
+            "@enabled": "true",
+            "@name": "tree"
+        }
+    },
+    "projecttree": {
+        "@showfs": true,
+        "expanded": {
+            "json()": [
+                "/",
+                "/src/main",
+                "/src/main/scala",
+                "/project/target",
+                "/project/target/config-classes",
+                "/verilog",
+                "/src",
+                "/src/main/scala/bus",
+                "/src/main/scala/cpu"
+            ]
+        }
+    },
+    "recentfiles": {
+        "json()": []
+    },
+    "search-history": {
+        "replace": {
+            "json()": [
+                "in7",
+                "in6",
+                "in5",
+                "in4",
+                "in3",
+                "in2",
+                "in1",
+                "UInt"
+            ]
+        },
+        "search": {
+            "json()": [
+                "SRL",
+                "in1",
+                "in0",
+                "Bits"
+            ]
+        }
+    },
+    "tabs": {
+        "json()": {
+            "focus": "/src/main/scala/bus/devices.scala",
+            "nodes": [
+                {
+                    "type": "pane",
+                    "name": "pane2",
+                    "nodes": [
+                        {
+                            "type": "tab",
+                            "name": "tab5",
+                            "path": "/src/main/scala/cpu/datapath.scala",
+                            "className": [
+                                "tab5"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435699397341
+                                },
+                                "filter": true,
+                                "title": "datapath.scala",
+                                "tooltip": "/src/main/scala/cpu/datapath.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab6",
+                            "path": "/src/main/scala/cpu/ctrlpath.scala",
+                            "className": [
+                                "tab6"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435700732904
+                                },
+                                "filter": true,
+                                "title": "ctrlpath.scala",
+                                "tooltip": "/src/main/scala/cpu/ctrlpath.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab22",
+                            "path": "/src/main/scala/bus/devices.scala",
+                            "className": [
+                                "tab22",
+                                "focus",
+                                "changed"
+                            ],
+                            "document": {
+                                "changed": true,
+                                "meta": {
+                                    "timestamp": 1435702795140
+                                },
+                                "filter": true,
+                                "title": "devices.scala",
+                                "tooltip": "/src/main/scala/bus/devices.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": true
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab23",
+                            "path": "/src/main/scala/test_main.scala",
+                            "className": [
+                                "tab23"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435701555375
+                                },
+                                "filter": true,
+                                "title": "test_main.scala",
+                                "tooltip": "/src/main/scala/test_main.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab24",
+                            "path": "/src/main/scala/soc.scala",
+                            "className": [
+                                "tab24"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435653075000
+                                },
+                                "filter": true,
+                                "title": "soc.scala",
+                                "tooltip": "/src/main/scala/soc.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        }
+                    ],
+                    "skin": "editor_tab",
+                    "skinset": "default",
+                    "meta": {
+                        "accessList": [
+                            "tab22",
+                            "tab23",
+                            "tab24",
+                            "tab6",
+                            "tab5"
+                        ]
+                    }
+                },
+                {
+                    "type": "pane",
+                    "name": "pane4",
+                    "nodes": [
+                        {
+                            "type": "tab",
+                            "name": "tab13",
+                            "path": "/src/main/scala/soc_test.scala",
+                            "className": [
+                                "tab13"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435701475247
+                                },
+                                "filter": true,
+                                "title": "soc_test.scala",
+                                "tooltip": "/src/main/scala/soc_test.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab25",
+                            "path": "/src/main/scala/bus/wb_seven_dev.scala",
+                            "className": [
+                                "tab25"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435648411000
+                                },
+                                "filter": true,
+                                "title": "wb_seven_dev.scala",
+                                "tooltip": "/src/main/scala/bus/wb_seven_dev.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": true
+                        }
+                    ],
+                    "width": "50%",
+                    "skin": "editor_tab",
+                    "skinset": "default",
+                    "meta": {
+                        "accessList": [
+                            "tab13",
+                            "tab25"
+                        ]
+                    }
+                }
+            ],
+            "type": "hsplitbox"
+        }
+    },
+    "tree_selection": {
+        "json()": [
+            "/src/main/scala/bus/wb_seven_dev.scala"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+run --test --compile
+run --test --genHarness --compile
+exit
+run --test
+run --test --genHarness
+run --test --compile --genHarness
+run --test --compile --genHarness --targetDir emulator
+exit
+run --backend v
+run --backend v --targetDir verilog
+q
+exit
+run --test --compile --genHarness --targetDir emulator
+exit
