@@ -76,6 +76,7 @@ class WB_Bus() extends Module {
             )
         )
     
+    /*
     when(ack_out) {
         printf(" --- current_slave: %d\n", current_slave);
         printf(" --- cpu_we: %d\n", io.from_cpu.we);
@@ -83,4 +84,5 @@ class WB_Bus() extends Module {
         printf(" --- led_sel: %d\n", io.slaves(2).sel);
         printf(" --- led_we: %d\n", io.slaves(2).we);
     }
+    */
 }

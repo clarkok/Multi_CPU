@@ -14,9 +14,11 @@ class WB_Led_Dev extends Module {
     io.LED := led_data
     
     when(io.bus.sel & io.bus.we) {
+        /*
         printf(" ---- sel: %d\n", io.bus.sel);
         printf(" ---- we: %d\n", io.bus.we);
         printf(" ---- data: %d\n", io.bus.dat2);
+        */
         led_data := io.bus.dat2
         data_out := io.bus.dat2
     }

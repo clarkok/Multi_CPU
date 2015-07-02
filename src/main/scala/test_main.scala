@@ -21,10 +21,10 @@ object TestMain {
         chiselMainTest(args, () => Module(new Datapath())) {
             c => new Datapath_Tests(c)
         }
-        chiselMainTest(args, () => Module(new SOC())) {
-            c => new SOC_Tests(c)
-        }
         */
+        chiselMainTest(args, () => Module(new Mock_Top())) {
+            c => new Mock_Test(c)
+        }
         chiselMain(args, () => Module(new SOC()))
     }
 }

@@ -47,12 +47,18 @@ class Register_File extends Module {
     when (io.we && io.wtaddr != UInt(0)) {
         rf(io.wtaddr) := io.wtdata
     }
+    
+    when (reset) {
+        for (i <- 0 until 32) {
+            rf(UInt(i)) := UInt(0)
+        }
+    }
 }
 
 class Datapath extends Module {
     val io = new CtrlIO().flip()
     
-    val pc = Reg(init = UInt(0, 32))
+    val pc = RegInit(init = UInt(0, 32))
     val alu = Module(new ALU())
     val regfile = Module(new Register_File())
     val inst_reg = Reg(init = UInt(0, 32))

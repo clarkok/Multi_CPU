@@ -198,10 +198,11 @@ class Ctrlpath extends Module {
             States.FETCH,
             Array(
                 States.FETCH -> (
-                    MuxCase(
+                    MuxLookup(
+                        inst_op,
                         States.FETCH,
                         Array(
-                            (inst_op === UInt(0)) -> (
+                            UInt(0) -> (
                                 MuxLookup(
                                     inst_func,
                                     States.FETCH,
@@ -220,20 +221,20 @@ class Ctrlpath extends Module {
                                     )
                                 )
                             ),
-                            (inst_op === UInt("b001000")) -> States.ADDI,
-                            (inst_op === UInt("b001001")) -> States.ADDIU,
-                            (inst_op === UInt("b001100")) -> States.ANDI,
-                            (inst_op === UInt("b001101")) -> States.ORI,
-                            (inst_op === UInt("b001110")) -> States.XORI,
-                            (inst_op === UInt("b001111")) -> States.LUI,
-                            (inst_op === UInt("b100011")) -> States.LW,
-                            (inst_op === UInt("b101011")) -> States.SW,
+                            UInt("b001000") -> States.ADDI,
+                            UInt("b001001") -> States.ADDIU,
+                            UInt("b001100") -> States.ANDI,
+                            UInt("b001101") -> States.ORI,
+                            UInt("b001110") -> States.XORI,
+                            UInt("b001111") -> States.LUI,
+                            UInt("b100011") -> States.LW,
+                            UInt("b101011") -> States.SW,
                             
-                            (inst_op === UInt("b000100")) -> States.BEQ,
-                            (inst_op === UInt("b000101")) -> States.BNE,
-                            (inst_op === UInt("b001010")) -> States.SLTI,
-                            (inst_op === UInt("b000010")) -> States.J,
-                            (inst_op === UInt("b000011")) -> States.JAL
+                            UInt("b000100") -> States.BEQ,
+                            UInt("b000101") -> States.BNE,
+                            UInt("b001010") -> States.SLTI,
+                            UInt("b000010") -> States.J,
+                            UInt("b000011") -> States.JAL
                         )
                     )
                 )
@@ -242,6 +243,7 @@ class Ctrlpath extends Module {
     
     when(io.bus.ack) {
         printf(" - state: %d\n", state);
+        /*
         printf(" - ctrls: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n", inst_we, pc_we, pc_next_sel, reg_we, reg_we_src, reg_we_dst, alu_op, alu_b_sel, bus_sel, bus_we, bus_addr_src);
         printf(" - inst: %x\n", inst);
         printf(" - inst_reg: %x\n", io.ctrl.inst);
@@ -251,6 +253,7 @@ class Ctrlpath extends Module {
         printf(" -- bus_dat4: %x\n", io.bus.dat4);
         printf(" -- alu_out: %x\n", io.ctrl.alu_out);
         printf("\n");
+        */
         
         state := next_state
     }

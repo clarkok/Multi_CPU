@@ -12,7 +12,6 @@ class WB_Ram_Dev extends Module {
         val bus = new WB_IO().flip()
         val ram = new Ram_IO()
     }
-    
     io.bus.ack := Bool(true)
     io.ram.addra := io.bus.addr.apply(11, 2)
     io.ram.dina := io.bus.dat2

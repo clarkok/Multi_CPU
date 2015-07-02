@@ -5,36 +5,8 @@ class Devices_IO extends Bundle {
     val LED = Bits(OUTPUT, 8)
     val BTN = Bits(INPUT, 5)
     val DISP_NUM = Bits(OUTPUT, 32)
+    val RAM = new Ram_IO()
 }
-
-class Ram_Wrap extends BlackBox {
-    val io = new Ram_IO().flip()
-}
-
-/*
-class Ram_Wrap extends Module {
-    val io = new Ram_IO().flip()
-    
-    io.douta := MuxLookup(
-        io.addra,
-        UInt(0),
-        Array(
-            UInt(0) -> UInt("h20010001"),
-            UInt(1) -> UInt("h20020002"),
-            UInt(2) -> UInt("h0022182a"),
-            UInt(3) -> UInt("h3c04a000"),
-            UInt(4) -> UInt("hac830000"),
-            UInt(5) -> UInt("h20020010"),
-            UInt(6) -> UInt("h00411806"),
-            UInt(7) -> UInt("hac830000"),
-            UInt(8) -> UInt("h2001002c"),
-            UInt(9) -> UInt("h00200008"),
-            UInt(10) -> UInt("h20420001"),
-            UInt(11) -> UInt("hac820000")
-        )
-    )
-}
-*/
 
 class Devices extends Module {
     val io = new Bundle {
@@ -51,9 +23,6 @@ class Devices extends Module {
     val seven_seg   = Module(new WB_Seven_Dev())
     
     val ram_dev     = Module(new WB_Ram_Dev())
-    val ram         = Module(new Ram_Wrap())
-    
-    ram.io <> ram_dev.io.ram
     
     io.bus <> bus.io.from_cpu
     bus.io.slaves(0) <> sw.io.bus
@@ -70,4 +39,5 @@ class Devices extends Module {
     io.devices.LED  <> led.io.LED
     io.devices.BTN  <> btn.io.BTN
     io.devices.DISP_NUM <> seven_seg.io.DISP_NUM
+    io.devices.RAM  <> ram_dev.io.ram
 }
