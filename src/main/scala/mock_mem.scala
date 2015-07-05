@@ -32,6 +32,7 @@ class Mock_Top extends Module {
     io.devices.LED <> soc.io.devices.LED
     io.devices.SW <> soc.io.devices.SW
     io.devices.BTN <> soc.io.devices.BTN
+    io.devices.VGA <> soc.io.devices.VGA
 }
 
 class Mock_Test(c : Mock_Top) extends Tester(c) {

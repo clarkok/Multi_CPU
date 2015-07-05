@@ -4,7 +4,7 @@
 		module="multi_cpu_2.10"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20150626192952"
+		publication="20150704165000"
 	>
 		<description>
 		multi_cpu

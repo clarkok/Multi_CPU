@@ -22,8 +22,8 @@ object TestMain {
             c => new Datapath_Tests(c)
         }
         */
-        chiselMainTest(args, () => Module(new Mock_Top())) {
-            c => new Mock_Test(c)
+        chiselMainTest(args, () => Module(new WB_VGA_Dev())) {
+            c => new WB_VGA_Dev_Tests(c)
         }
         chiselMain(args, () => Module(new SOC()))
     }

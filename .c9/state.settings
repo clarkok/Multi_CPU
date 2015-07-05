@@ -77,18 +77,18 @@
     },
     "ext": {
         "counters": {
-            "@ace": 6,
-            "@acestatus": 5,
+            "@ace": 3,
+            "@acestatus": 3,
             "@divider": 4,
-            "@document": 36,
+            "@document": 19,
             "@form": 4,
             "@immediate": 1,
             "@menu": 5,
             "@menuitem": 13,
-            "@pane": 5,
-            "@session": 36,
-            "@tab": 33,
-            "@undoManager": 36
+            "@pane": 1,
+            "@session": 19,
+            "@tab": 12,
+            "@undoManager": 19
         }
     },
     "findinfiles": {
@@ -105,9 +105,9 @@
     },
     "panecycle": {
         "json()": [
-            "tab22",
-            "tab31",
-            "tab20"
+            "tab11",
+            "tab9",
+            "tab5"
         ]
     },
     "panels": {
@@ -135,6 +135,7 @@
         }
     },
     "projecttree": {
+        "@scrollpos": 296,
         "@showfs": true,
         "expanded": {
             "json()": [
@@ -180,32 +181,12 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/src/main/scala/bus/devices.scala",
+            "focus": "/verilog/keyboard_ctrl.v",
             "nodes": [
                 {
                     "type": "pane",
                     "name": "pane2",
                     "nodes": [
-                        {
-                            "type": "tab",
-                            "name": "tab5",
-                            "path": "/src/main/scala/cpu/datapath.scala",
-                            "className": [
-                                "tab5"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435741124914
-                                },
-                                "filter": true,
-                                "title": "datapath.scala",
-                                "tooltip": "/src/main/scala/cpu/datapath.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
-                        },
                         {
                             "type": "tab",
                             "name": "tab6",
@@ -216,7 +197,7 @@
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1435822868565
+                                    "timestamp": 1435822868000
                                 },
                                 "filter": true,
                                 "title": "ctrlpath.scala",
@@ -228,75 +209,96 @@
                         },
                         {
                             "type": "tab",
-                            "name": "tab22",
-                            "path": "/src/main/scala/bus/devices.scala",
+                            "name": "tab5",
+                            "path": "/src/main/scala/bus/wb_vga_test.scala",
                             "className": [
-                                "tab22",
+                                "tab5"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1436000989869
+                                },
+                                "filter": true,
+                                "title": "wb_vga_test.scala",
+                                "tooltip": "/src/main/scala/bus/wb_vga_test.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab7",
+                            "path": "/src/main/scala/bus/wb_vga.scala",
+                            "className": [
+                                "tab7"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1436068979573
+                                },
+                                "filter": true,
+                                "title": "wb_vga.scala",
+                                "tooltip": "/src/main/scala/bus/wb_vga.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab10",
+                            "path": "/src/main/scala/bus/wb_keyboard.scala",
+                            "className": [
+                                "tab10",
+                                "changed"
+                            ],
+                            "document": {
+                                "changed": true,
+                                "meta": {
+                                    "timestamp": 1436069244000
+                                },
+                                "filter": true,
+                                "title": "wb_keyboard.scala",
+                                "tooltip": "/src/main/scala/bus/wb_keyboard.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab11",
+                            "path": "/verilog/keyboard_ctrl.v",
+                            "className": [
+                                "tab11",
                                 "focus"
                             ],
                             "document": {
                                 "changed": false,
                                 "meta": {
-                                    "timestamp": 1435745673283
+                                    "timestamp": 1436069955000
                                 },
                                 "filter": true,
-                                "title": "devices.scala",
-                                "tooltip": "/src/main/scala/bus/devices.scala",
+                                "title": "keyboard_ctrl.v",
+                                "tooltip": "/verilog/keyboard_ctrl.v",
                                 "ace": {}
                             },
                             "editorType": "ace",
                             "active": true
-                        },
-                        {
-                            "type": "tab",
-                            "name": "tab24",
-                            "path": "/src/main/scala/soc.scala",
-                            "className": [
-                                "tab24"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435822913337
-                                },
-                                "filter": true,
-                                "title": "soc.scala",
-                                "tooltip": "/src/main/scala/soc.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
-                        },
-                        {
-                            "type": "tab",
-                            "name": "tab30",
-                            "path": "/src/main/scala/mock_mem.scala",
-                            "className": [
-                                "tab30"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435808296541
-                                },
-                                "filter": true,
-                                "title": "mock_mem.scala",
-                                "tooltip": "/src/main/scala/mock_mem.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
                         }
                     ],
                     "skin": "editor_tab",
                     "skinset": "default",
                     "meta": {
                         "accessList": [
-                            "tab22",
-                            "tab24",
-                            "tab6",
-                            "tab30",
-                            "tab5"
+                            "tab11",
+                            "tab10",
+                            "tab7",
+                            "tab5",
+                            "tab6"
                         ]
                     }
                 },
@@ -304,66 +306,6 @@
                     "type": "pane",
                     "name": "pane4",
                     "nodes": [
-                        {
-                            "type": "tab",
-                            "name": "tab23",
-                            "path": "/src/main/scala/test_main.scala",
-                            "className": [
-                                "tab23"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435807174699
-                                },
-                                "filter": true,
-                                "title": "test_main.scala",
-                                "tooltip": "/src/main/scala/test_main.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
-                        },
-                        {
-                            "type": "tab",
-                            "name": "tab27",
-                            "path": "/src/main/scala/bus/wb_ram_dev.scala",
-                            "className": [
-                                "tab27"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435739172071
-                                },
-                                "filter": true,
-                                "title": "wb_ram_dev.scala",
-                                "tooltip": "/src/main/scala/bus/wb_ram_dev.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
-                        },
-                        {
-                            "type": "tab",
-                            "name": "tab25",
-                            "path": "/src/main/scala/bus/wb_seven_dev.scala",
-                            "className": [
-                                "tab25"
-                            ],
-                            "document": {
-                                "changed": false,
-                                "meta": {
-                                    "timestamp": 1435648411000
-                                },
-                                "filter": true,
-                                "title": "wb_seven_dev.scala",
-                                "tooltip": "/src/main/scala/bus/wb_seven_dev.scala",
-                                "ace": {}
-                            },
-                            "editorType": "ace",
-                            "active": false
-                        },
                         {
                             "type": "tab",
                             "name": "tab31",
@@ -382,6 +324,106 @@
                                 "ace": {}
                             },
                             "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab1",
+                            "path": "/src/main/scala/bus/devices.scala",
+                            "className": [
+                                "tab1"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435995897750
+                                },
+                                "filter": true,
+                                "title": "devices.scala",
+                                "tooltip": "/src/main/scala/bus/devices.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab2",
+                            "path": "/src/main/scala/wb_io.scala",
+                            "className": [
+                                "tab2"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435490689000
+                                },
+                                "filter": true,
+                                "title": "wb_io.scala",
+                                "tooltip": "/src/main/scala/wb_io.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab3",
+                            "path": "/src/main/scala/bus/wb_led_dev.scala",
+                            "className": [
+                                "tab3"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435749221000
+                                },
+                                "filter": true,
+                                "title": "wb_led_dev.scala",
+                                "tooltip": "/src/main/scala/bus/wb_led_dev.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab4",
+                            "path": "/src/main/scala/cpu/datapath.scala",
+                            "className": [
+                                "tab4"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1435741124000
+                                },
+                                "filter": true,
+                                "title": "datapath.scala",
+                                "tooltip": "/src/main/scala/cpu/datapath.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
+                            "active": false
+                        },
+                        {
+                            "type": "tab",
+                            "name": "tab9",
+                            "path": "/src/main/scala/test_main.scala",
+                            "className": [
+                                "tab9"
+                            ],
+                            "document": {
+                                "changed": false,
+                                "meta": {
+                                    "timestamp": 1436000896271
+                                },
+                                "filter": true,
+                                "title": "test_main.scala",
+                                "tooltip": "/src/main/scala/test_main.scala",
+                                "ace": {}
+                            },
+                            "editorType": "ace",
                             "active": true
                         }
                     ],
@@ -390,10 +432,12 @@
                     "skinset": "default",
                     "meta": {
                         "accessList": [
+                            "tab9",
+                            "tab4",
+                            "tab1",
                             "tab31",
-                            "tab23",
-                            "tab27",
-                            "tab25"
+                            "tab2",
+                            "tab3"
                         ]
                     }
                 }
@@ -403,7 +447,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/verilog/SOC.v"
+            "/verilog/keyboard_ctrl.v"
         ]
     }
 }

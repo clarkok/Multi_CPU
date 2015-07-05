@@ -5,6 +5,7 @@ class Devices_IO extends Bundle {
     val LED = Bits(OUTPUT, 8)
     val BTN = Bits(INPUT, 5)
     val DISP_NUM = Bits(OUTPUT, 32)
+    val VGA = new VGA_IO()
     val RAM = new Ram_IO()
 }
 
@@ -21,8 +22,8 @@ class Devices extends Module {
     val led         = Module(new WB_Led_Dev())
     val counter     = Module(new WB_Empty_Dev())
     val seven_seg   = Module(new WB_Seven_Dev())
-    
     val ram_dev     = Module(new WB_Ram_Dev())
+    val vga_dev     = Module(new WB_VGA_Dev())
     
     io.bus <> bus.io.from_cpu
     bus.io.slaves(0) <> sw.io.bus
@@ -30,7 +31,7 @@ class Devices extends Module {
     bus.io.slaves(2) <> led.io.bus
     bus.io.slaves(3) <> counter.io.bus
     bus.io.slaves(4) <> seven_seg.io.bus
-    bus.io.slaves(5) <> Module(new WB_Empty_Dev()).io.bus
+    bus.io.slaves(5) <> vga_dev.io.bus
     bus.io.slaves(6) <> Module(new WB_Empty_Dev()).io.bus
     bus.io.slaves(7) <> Module(new WB_Empty_Dev()).io.bus
     bus.io.ram_slave <> ram_dev.io.bus
@@ -40,4 +41,5 @@ class Devices extends Module {
     io.devices.BTN  <> btn.io.BTN
     io.devices.DISP_NUM <> seven_seg.io.DISP_NUM
     io.devices.RAM  <> ram_dev.io.ram
+    io.devices.VGA  <> vga_dev.io.vga
 }
