@@ -9,7 +9,7 @@ module Ctrlpath(input clk, input reset,
     output[1:0] io_ctrl_reg_we_src,
     output[1:0] io_ctrl_reg_we_dst,
     output[2:0] io_ctrl_alu_op,
-    output io_ctrl_alu_b_sel,
+    output[1:0] io_ctrl_alu_b_sel,
     input [31:0] io_ctrl_alu_out,
     input [31:0] io_ctrl_data_out,
     output[31:0] io_bus_addr,
@@ -25,13 +25,14 @@ module Ctrlpath(input clk, input reset,
     output[31:0] io_debug_pc_out
 );
 
+  wire[31:0] inst;
   wire T0;
-  wire T1;
-  wire[31:0] T2;
   reg [31:0] state;
-  wire[31:0] T278;
-  wire[31:0] T3;
+  wire[31:0] T274;
+  wire[31:0] T1;
   wire[31:0] next_state;
+  wire[31:0] T2;
+  wire[31:0] T3;
   wire[31:0] T4;
   wire[31:0] T5;
   wire[31:0] T6;
@@ -45,11 +46,10 @@ module Ctrlpath(input clk, input reset,
   wire[31:0] T14;
   wire[31:0] T15;
   wire[31:0] T16;
-  wire[31:0] T17;
-  wire[31:0] T18;
-  wire T19;
+  wire T17;
   wire[5:0] inst_op;
-  wire[31:0] inst;
+  wire T18;
+  wire T19;
   wire T20;
   wire T21;
   wire T22;
@@ -60,9 +60,9 @@ module Ctrlpath(input clk, input reset,
   wire T27;
   wire T28;
   wire T29;
-  wire T30;
-  wire T31;
-  wire T32;
+  wire[31:0] T30;
+  wire[31:0] T31;
+  wire[31:0] T32;
   wire[31:0] T33;
   wire[31:0] T34;
   wire[31:0] T35;
@@ -71,11 +71,11 @@ module Ctrlpath(input clk, input reset,
   wire[31:0] T38;
   wire[31:0] T39;
   wire[31:0] T40;
-  wire[31:0] T41;
-  wire[31:0] T42;
-  wire[31:0] T43;
-  wire T44;
+  wire T41;
   wire[5:0] inst_func;
+  wire T42;
+  wire T43;
+  wire T44;
   wire T45;
   wire T46;
   wire T47;
@@ -85,11 +85,11 @@ module Ctrlpath(input clk, input reset,
   wire T51;
   wire T52;
   wire T53;
+  wire bus_we;
   wire T54;
   wire T55;
   wire T56;
-  wire[167:0] T57;
-  wire bus_we;
+  wire T57;
   wire T58;
   wire T59;
   wire T60;
@@ -123,12 +123,12 @@ module Ctrlpath(input clk, input reset,
   wire T88;
   wire T89;
   wire T90;
+  wire inst_we;
+  wire bus_sel;
   wire T91;
   wire T92;
   wire T93;
   wire T94;
-  wire inst_we;
-  wire bus_sel;
   wire T95;
   wire T96;
   wire T97;
@@ -143,14 +143,14 @@ module Ctrlpath(input clk, input reset,
   wire T106;
   wire T107;
   wire T108;
-  wire T109;
-  wire T110;
+  wire[31:0] T109;
+  wire[31:0] T110;
   wire T111;
-  wire T112;
-  wire[31:0] T113;
-  wire[31:0] T114;
-  wire T115;
   wire bus_addr_src;
+  wire T112;
+  wire T113;
+  wire T114;
+  wire T115;
   wire T116;
   wire T117;
   wire T118;
@@ -166,12 +166,11 @@ module Ctrlpath(input clk, input reset,
   wire T128;
   wire T129;
   wire T130;
-  wire T131;
-  wire T132;
-  wire T133;
-  wire T134;
-  wire T279;
   wire[1:0] alu_b_sel;
+  wire[1:0] T131;
+  wire[1:0] T132;
+  wire[1:0] T133;
+  wire[1:0] T134;
   wire[1:0] T135;
   wire[1:0] T136;
   wire[1:0] T137;
@@ -189,15 +188,15 @@ module Ctrlpath(input clk, input reset,
   wire[1:0] T149;
   wire[1:0] T150;
   wire[1:0] T151;
-  wire[1:0] T152;
-  wire[1:0] T153;
-  wire[1:0] T154;
-  wire[1:0] T155;
-  wire[1:0] T280;
-  wire T156;
-  wire T157;
-  wire T158;
+  wire[1:0] T275;
+  wire T152;
+  wire T153;
+  wire T154;
   wire[2:0] alu_op;
+  wire[2:0] T155;
+  wire[2:0] T156;
+  wire[2:0] T157;
+  wire[2:0] T158;
   wire[2:0] T159;
   wire[2:0] T160;
   wire[2:0] T161;
@@ -216,11 +215,11 @@ module Ctrlpath(input clk, input reset,
   wire[2:0] T174;
   wire[2:0] T175;
   wire[2:0] T176;
-  wire[2:0] T177;
-  wire[2:0] T178;
-  wire[2:0] T179;
-  wire[2:0] T180;
   wire[1:0] reg_we_dst;
+  wire[1:0] T177;
+  wire[1:0] T178;
+  wire[1:0] T179;
+  wire[1:0] T180;
   wire[1:0] T181;
   wire[1:0] T182;
   wire[1:0] T183;
@@ -241,13 +240,13 @@ module Ctrlpath(input clk, input reset,
   wire[1:0] T198;
   wire[1:0] T199;
   wire[1:0] T200;
-  wire[1:0] T201;
-  wire[1:0] T202;
+  wire T201;
+  wire T202;
+  wire[1:0] reg_we_src;
   wire[1:0] T203;
   wire[1:0] T204;
-  wire T205;
-  wire T206;
-  wire[1:0] reg_we_src;
+  wire[1:0] T205;
+  wire[1:0] T206;
   wire[1:0] T207;
   wire[1:0] T208;
   wire[1:0] T209;
@@ -268,11 +267,11 @@ module Ctrlpath(input clk, input reset,
   wire[1:0] T224;
   wire[1:0] T225;
   wire[1:0] T226;
-  wire[1:0] T227;
-  wire[1:0] T228;
-  wire[1:0] T229;
-  wire[1:0] T230;
   wire reg_we;
+  wire T227;
+  wire T228;
+  wire T229;
+  wire T230;
   wire T231;
   wire T232;
   wire T233;
@@ -292,11 +291,11 @@ module Ctrlpath(input clk, input reset,
   wire T247;
   wire T248;
   wire T249;
-  wire T250;
-  wire T251;
-  wire T252;
-  wire T253;
   wire[1:0] pc_next_sel;
+  wire[1:0] T250;
+  wire[1:0] T251;
+  wire[1:0] T252;
+  wire[1:0] T253;
   wire[1:0] T254;
   wire[1:0] T255;
   wire[1:0] T256;
@@ -317,10 +316,6 @@ module Ctrlpath(input clk, input reset,
   wire[1:0] T271;
   wire[1:0] T272;
   wire[1:0] T273;
-  wire[1:0] T274;
-  wire[1:0] T275;
-  wire[1:0] T276;
-  wire[1:0] T277;
   wire pc_we;
 
 `ifndef SYNTHESIS
@@ -333,315 +328,311 @@ module Ctrlpath(input clk, input reset,
 // synthesis translate_on
 `endif
 
-  assign T0 = io_bus_ack & T1;
-  assign T1 = reset ^ 1'h1;
-  assign T2 = state;
-  assign T278 = reset ? 32'h0 : T3;
-  assign T3 = io_bus_ack ? next_state : state;
-  assign next_state = T4;
-  assign T4 = T56 ? T5 : 32'h0;
-  assign T5 = T55 ? T33 : T6;
-  assign T6 = T32 ? 32'hc : T7;
-  assign T7 = T31 ? 32'hd : T8;
-  assign T8 = T30 ? 32'he : T9;
-  assign T9 = T29 ? 32'hf : T10;
-  assign T10 = T28 ? 32'h10 : T11;
-  assign T11 = T27 ? 32'h11 : T12;
-  assign T12 = T26 ? 32'h12 : T13;
-  assign T13 = T25 ? 32'h13 : T14;
-  assign T14 = T24 ? 32'h14 : T15;
-  assign T15 = T23 ? 32'h15 : T16;
-  assign T16 = T22 ? 32'h16 : T17;
-  assign T17 = T21 ? 32'h17 : T18;
-  assign T18 = T19 ? 32'h18 : 32'h0;
-  assign T19 = inst_op == 6'h3;
-  assign inst_op = inst[5'h1f:5'h1a];
-  assign inst = T20 ? io_bus_dat4 : io_ctrl_inst;
-  assign T20 = state == 32'h0;
-  assign T21 = inst_op == 6'h2;
-  assign T22 = inst_op == 6'ha;
-  assign T23 = inst_op == 6'h5;
-  assign T24 = inst_op == 6'h4;
-  assign T25 = inst_op == 6'h2b;
-  assign T26 = inst_op == 6'h23;
-  assign T27 = inst_op == 6'hf;
-  assign T28 = inst_op == 6'he;
-  assign T29 = inst_op == 6'hd;
-  assign T30 = inst_op == 6'hc;
-  assign T31 = inst_op == 6'h9;
-  assign T32 = inst_op == 6'h8;
-  assign T33 = T54 ? 32'h1 : T34;
-  assign T34 = T53 ? 32'h2 : T35;
-  assign T35 = T52 ? 32'h3 : T36;
-  assign T36 = T51 ? 32'h4 : T37;
-  assign T37 = T50 ? 32'h5 : T38;
-  assign T38 = T49 ? 32'h6 : T39;
-  assign T39 = T48 ? 32'h7 : T40;
-  assign T40 = T47 ? 32'h8 : T41;
-  assign T41 = T46 ? 32'h9 : T42;
-  assign T42 = T45 ? 32'ha : T43;
-  assign T43 = T44 ? 32'hb : 32'h0;
-  assign T44 = inst_func == 6'h8;
-  assign inst_func = inst[3'h5:1'h0];
-  assign T45 = inst_func == 6'h6;
-  assign T46 = inst_func == 6'h2a;
-  assign T47 = inst_func == 6'h27;
-  assign T48 = inst_func == 6'h26;
-  assign T49 = inst_func == 6'h25;
-  assign T50 = inst_func == 6'h24;
-  assign T51 = inst_func == 6'h23;
-  assign T52 = inst_func == 6'h22;
-  assign T53 = inst_func == 6'h21;
-  assign T54 = inst_func == 6'h20;
-  assign T55 = inst_op == 6'h0;
-  assign T56 = state == 32'h0;
   assign io_debug_pc_out = io_ctrl_pc_out;
   assign io_debug_bus_dat4 = io_bus_dat4;
   assign io_debug_bus_dat2 = io_bus_dat2;
   assign io_debug_bus_addr = io_bus_addr;
   assign io_debug_inst_out = inst;
+  assign inst = T0 ? io_bus_dat4 : io_ctrl_inst;
+  assign T0 = state == 32'h0;
+  assign T274 = reset ? 32'h0 : T1;
+  assign T1 = io_bus_ack ? next_state : state;
+  assign next_state = T2;
+  assign T2 = T53 ? T3 : 32'h0;
+  assign T3 = T52 ? T30 : T4;
+  assign T4 = T29 ? 32'hc : T5;
+  assign T5 = T28 ? 32'hd : T6;
+  assign T6 = T27 ? 32'he : T7;
+  assign T7 = T26 ? 32'hf : T8;
+  assign T8 = T25 ? 32'h10 : T9;
+  assign T9 = T24 ? 32'h11 : T10;
+  assign T10 = T23 ? 32'h12 : T11;
+  assign T11 = T22 ? 32'h13 : T12;
+  assign T12 = T21 ? 32'h14 : T13;
+  assign T13 = T20 ? 32'h15 : T14;
+  assign T14 = T19 ? 32'h16 : T15;
+  assign T15 = T18 ? 32'h17 : T16;
+  assign T16 = T17 ? 32'h18 : 32'h0;
+  assign T17 = inst_op == 6'h3;
+  assign inst_op = inst[5'h1f:5'h1a];
+  assign T18 = inst_op == 6'h2;
+  assign T19 = inst_op == 6'ha;
+  assign T20 = inst_op == 6'h5;
+  assign T21 = inst_op == 6'h4;
+  assign T22 = inst_op == 6'h2b;
+  assign T23 = inst_op == 6'h23;
+  assign T24 = inst_op == 6'hf;
+  assign T25 = inst_op == 6'he;
+  assign T26 = inst_op == 6'hd;
+  assign T27 = inst_op == 6'hc;
+  assign T28 = inst_op == 6'h9;
+  assign T29 = inst_op == 6'h8;
+  assign T30 = T51 ? 32'h1 : T31;
+  assign T31 = T50 ? 32'h2 : T32;
+  assign T32 = T49 ? 32'h3 : T33;
+  assign T33 = T48 ? 32'h4 : T34;
+  assign T34 = T47 ? 32'h5 : T35;
+  assign T35 = T46 ? 32'h6 : T36;
+  assign T36 = T45 ? 32'h7 : T37;
+  assign T37 = T44 ? 32'h8 : T38;
+  assign T38 = T43 ? 32'h9 : T39;
+  assign T39 = T42 ? 32'ha : T40;
+  assign T40 = T41 ? 32'hb : 32'h0;
+  assign T41 = inst_func == 6'h8;
+  assign inst_func = inst[3'h5:1'h0];
+  assign T42 = inst_func == 6'h6;
+  assign T43 = inst_func == 6'h2a;
+  assign T44 = inst_func == 6'h27;
+  assign T45 = inst_func == 6'h26;
+  assign T46 = inst_func == 6'h25;
+  assign T47 = inst_func == 6'h24;
+  assign T48 = inst_func == 6'h23;
+  assign T49 = inst_func == 6'h22;
+  assign T50 = inst_func == 6'h21;
+  assign T51 = inst_func == 6'h20;
+  assign T52 = inst_op == 6'h0;
+  assign T53 = state == 32'h0;
   assign io_bus_we = bus_we;
-  assign bus_we = inst_we ? 1'h0 : T58;
-  assign T58 = T94 ? 1'h0 : T59;
-  assign T59 = T93 ? 1'h0 : T60;
-  assign T60 = T92 ? 1'h0 : T61;
-  assign T61 = T91 ? 1'h0 : T62;
-  assign T62 = T90 ? 1'h0 : T63;
-  assign T63 = T89 ? 1'h0 : T64;
-  assign T64 = T88 ? 1'h0 : T65;
-  assign T65 = T87 ? 1'h0 : T66;
-  assign T66 = T86 ? 1'h0 : T67;
-  assign T67 = T85 ? 1'h0 : T68;
-  assign T68 = T84 ? 1'h0 : T69;
-  assign T69 = T83 ? 1'h0 : T70;
-  assign T70 = T82 ? 1'h0 : T71;
-  assign T71 = T81 ? 1'h0 : T72;
-  assign T72 = T80 ? 1'h0 : T73;
-  assign T73 = T79 ? 1'h0 : T74;
-  assign T74 = T78 ? 1'h0 : T75;
-  assign T75 = T77 ? 1'h0 : T76;
-  assign T76 = state == 32'h13;
-  assign T77 = state == 32'h12;
-  assign T78 = state == 32'h11;
-  assign T79 = state == 32'h10;
-  assign T80 = state == 32'hf;
-  assign T81 = state == 32'he;
-  assign T82 = state == 32'hd;
-  assign T83 = state == 32'hc;
-  assign T84 = state == 32'hb;
-  assign T85 = state == 32'ha;
-  assign T86 = state == 32'h9;
-  assign T87 = state == 32'h8;
-  assign T88 = state == 32'h7;
-  assign T89 = state == 32'h6;
-  assign T90 = state == 32'h5;
-  assign T91 = state == 32'h4;
-  assign T92 = state == 32'h3;
-  assign T93 = state == 32'h2;
-  assign T94 = state == 32'h1;
+  assign bus_we = inst_we ? 1'h0 : T54;
+  assign T54 = T90 ? 1'h0 : T55;
+  assign T55 = T89 ? 1'h0 : T56;
+  assign T56 = T88 ? 1'h0 : T57;
+  assign T57 = T87 ? 1'h0 : T58;
+  assign T58 = T86 ? 1'h0 : T59;
+  assign T59 = T85 ? 1'h0 : T60;
+  assign T60 = T84 ? 1'h0 : T61;
+  assign T61 = T83 ? 1'h0 : T62;
+  assign T62 = T82 ? 1'h0 : T63;
+  assign T63 = T81 ? 1'h0 : T64;
+  assign T64 = T80 ? 1'h0 : T65;
+  assign T65 = T79 ? 1'h0 : T66;
+  assign T66 = T78 ? 1'h0 : T67;
+  assign T67 = T77 ? 1'h0 : T68;
+  assign T68 = T76 ? 1'h0 : T69;
+  assign T69 = T75 ? 1'h0 : T70;
+  assign T70 = T74 ? 1'h0 : T71;
+  assign T71 = T73 ? 1'h0 : T72;
+  assign T72 = state == 32'h13;
+  assign T73 = state == 32'h12;
+  assign T74 = state == 32'h11;
+  assign T75 = state == 32'h10;
+  assign T76 = state == 32'hf;
+  assign T77 = state == 32'he;
+  assign T78 = state == 32'hd;
+  assign T79 = state == 32'hc;
+  assign T80 = state == 32'hb;
+  assign T81 = state == 32'ha;
+  assign T82 = state == 32'h9;
+  assign T83 = state == 32'h8;
+  assign T84 = state == 32'h7;
+  assign T85 = state == 32'h6;
+  assign T86 = state == 32'h5;
+  assign T87 = state == 32'h4;
+  assign T88 = state == 32'h3;
+  assign T89 = state == 32'h2;
+  assign T90 = state == 32'h1;
   assign inst_we = state == 32'h0;
   assign io_bus_sel = bus_sel;
-  assign bus_sel = inst_we ? 1'h1 : T95;
-  assign T95 = T94 ? 1'h0 : T96;
-  assign T96 = T93 ? 1'h0 : T97;
-  assign T97 = T92 ? 1'h0 : T98;
-  assign T98 = T91 ? 1'h0 : T99;
-  assign T99 = T90 ? 1'h0 : T100;
-  assign T100 = T89 ? 1'h0 : T101;
-  assign T101 = T88 ? 1'h0 : T102;
-  assign T102 = T87 ? 1'h0 : T103;
-  assign T103 = T86 ? 1'h0 : T104;
-  assign T104 = T85 ? 1'h0 : T105;
-  assign T105 = T84 ? 1'h0 : T106;
-  assign T106 = T83 ? 1'h0 : T107;
-  assign T107 = T82 ? 1'h0 : T108;
-  assign T108 = T81 ? 1'h0 : T109;
-  assign T109 = T80 ? 1'h0 : T110;
-  assign T110 = T79 ? 1'h0 : T111;
-  assign T111 = T78 ? 1'h0 : T112;
-  assign T112 = T77 ? 1'h1 : T76;
+  assign bus_sel = inst_we ? 1'h1 : T91;
+  assign T91 = T90 ? 1'h0 : T92;
+  assign T92 = T89 ? 1'h0 : T93;
+  assign T93 = T88 ? 1'h0 : T94;
+  assign T94 = T87 ? 1'h0 : T95;
+  assign T95 = T86 ? 1'h0 : T96;
+  assign T96 = T85 ? 1'h0 : T97;
+  assign T97 = T84 ? 1'h0 : T98;
+  assign T98 = T83 ? 1'h0 : T99;
+  assign T99 = T82 ? 1'h0 : T100;
+  assign T100 = T81 ? 1'h0 : T101;
+  assign T101 = T80 ? 1'h0 : T102;
+  assign T102 = T79 ? 1'h0 : T103;
+  assign T103 = T78 ? 1'h0 : T104;
+  assign T104 = T77 ? 1'h0 : T105;
+  assign T105 = T76 ? 1'h0 : T106;
+  assign T106 = T75 ? 1'h0 : T107;
+  assign T107 = T74 ? 1'h0 : T108;
+  assign T108 = T73 ? 1'h1 : T72;
   assign io_bus_dat2 = io_ctrl_data_out;
-  assign io_bus_addr = T113;
-  assign T113 = T134 ? io_ctrl_alu_out : T114;
-  assign T114 = T115 ? io_ctrl_pc_out : 32'h0;
-  assign T115 = bus_addr_src == 1'h0;
-  assign bus_addr_src = inst_we ? 1'h0 : T116;
-  assign T116 = T94 ? 1'h0 : T117;
-  assign T117 = T93 ? 1'h0 : T118;
-  assign T118 = T92 ? 1'h0 : T119;
-  assign T119 = T91 ? 1'h0 : T120;
-  assign T120 = T90 ? 1'h0 : T121;
-  assign T121 = T89 ? 1'h0 : T122;
-  assign T122 = T88 ? 1'h0 : T123;
-  assign T123 = T87 ? 1'h0 : T124;
-  assign T124 = T86 ? 1'h0 : T125;
-  assign T125 = T85 ? 1'h0 : T126;
-  assign T126 = T84 ? 1'h0 : T127;
-  assign T127 = T83 ? 1'h0 : T128;
-  assign T128 = T82 ? 1'h0 : T129;
-  assign T129 = T81 ? 1'h0 : T130;
-  assign T130 = T80 ? 1'h0 : T131;
-  assign T131 = T79 ? 1'h0 : T132;
-  assign T132 = T78 ? 1'h0 : T133;
-  assign T133 = T77 ? 1'h1 : T76;
-  assign T134 = bus_addr_src == 1'h1;
-  assign io_ctrl_alu_b_sel = T279;
-  assign T279 = alu_b_sel[1'h0:1'h0];
-  assign alu_b_sel = inst_we ? 2'h0 : T135;
-  assign T135 = T94 ? 2'h0 : T136;
-  assign T136 = T93 ? 2'h0 : T137;
-  assign T137 = T92 ? 2'h0 : T138;
-  assign T138 = T91 ? 2'h0 : T139;
-  assign T139 = T90 ? 2'h0 : T140;
-  assign T140 = T89 ? 2'h0 : T141;
-  assign T141 = T88 ? 2'h0 : T142;
-  assign T142 = T87 ? 2'h0 : T143;
-  assign T143 = T86 ? 2'h0 : T144;
-  assign T144 = T85 ? 2'h0 : T145;
-  assign T145 = T84 ? 2'h0 : T146;
-  assign T146 = T83 ? 2'h1 : T147;
-  assign T147 = T82 ? 2'h1 : T148;
-  assign T148 = T81 ? 2'h1 : T149;
-  assign T149 = T80 ? 2'h1 : T150;
-  assign T150 = T79 ? 2'h1 : T151;
-  assign T151 = T78 ? 2'h1 : T152;
-  assign T152 = T77 ? 2'h1 : T153;
-  assign T153 = T76 ? 2'h1 : T154;
-  assign T154 = T158 ? 2'h0 : T155;
-  assign T155 = T157 ? 2'h2 : T280;
-  assign T280 = {1'h0, T156};
-  assign T156 = state == 32'h16;
-  assign T157 = state == 32'h15;
-  assign T158 = state == 32'h14;
+  assign io_bus_addr = T109;
+  assign T109 = T130 ? io_ctrl_alu_out : T110;
+  assign T110 = T111 ? io_ctrl_pc_out : 32'h0;
+  assign T111 = bus_addr_src == 1'h0;
+  assign bus_addr_src = inst_we ? 1'h0 : T112;
+  assign T112 = T90 ? 1'h0 : T113;
+  assign T113 = T89 ? 1'h0 : T114;
+  assign T114 = T88 ? 1'h0 : T115;
+  assign T115 = T87 ? 1'h0 : T116;
+  assign T116 = T86 ? 1'h0 : T117;
+  assign T117 = T85 ? 1'h0 : T118;
+  assign T118 = T84 ? 1'h0 : T119;
+  assign T119 = T83 ? 1'h0 : T120;
+  assign T120 = T82 ? 1'h0 : T121;
+  assign T121 = T81 ? 1'h0 : T122;
+  assign T122 = T80 ? 1'h0 : T123;
+  assign T123 = T79 ? 1'h0 : T124;
+  assign T124 = T78 ? 1'h0 : T125;
+  assign T125 = T77 ? 1'h0 : T126;
+  assign T126 = T76 ? 1'h0 : T127;
+  assign T127 = T75 ? 1'h0 : T128;
+  assign T128 = T74 ? 1'h0 : T129;
+  assign T129 = T73 ? 1'h1 : T72;
+  assign T130 = bus_addr_src == 1'h1;
+  assign io_ctrl_alu_b_sel = alu_b_sel;
+  assign alu_b_sel = inst_we ? 2'h0 : T131;
+  assign T131 = T90 ? 2'h0 : T132;
+  assign T132 = T89 ? 2'h0 : T133;
+  assign T133 = T88 ? 2'h0 : T134;
+  assign T134 = T87 ? 2'h0 : T135;
+  assign T135 = T86 ? 2'h0 : T136;
+  assign T136 = T85 ? 2'h0 : T137;
+  assign T137 = T84 ? 2'h0 : T138;
+  assign T138 = T83 ? 2'h0 : T139;
+  assign T139 = T82 ? 2'h0 : T140;
+  assign T140 = T81 ? 2'h0 : T141;
+  assign T141 = T80 ? 2'h0 : T142;
+  assign T142 = T79 ? 2'h1 : T143;
+  assign T143 = T78 ? 2'h1 : T144;
+  assign T144 = T77 ? 2'h1 : T145;
+  assign T145 = T76 ? 2'h1 : T146;
+  assign T146 = T75 ? 2'h1 : T147;
+  assign T147 = T74 ? 2'h1 : T148;
+  assign T148 = T73 ? 2'h1 : T149;
+  assign T149 = T72 ? 2'h1 : T150;
+  assign T150 = T154 ? 2'h0 : T151;
+  assign T151 = T153 ? 2'h2 : T275;
+  assign T275 = {1'h0, T152};
+  assign T152 = state == 32'h16;
+  assign T153 = state == 32'h15;
+  assign T154 = state == 32'h14;
   assign io_ctrl_alu_op = alu_op;
-  assign alu_op = inst_we ? 3'h0 : T159;
-  assign T159 = T94 ? 3'h2 : T160;
-  assign T160 = T93 ? 3'h2 : T161;
-  assign T161 = T92 ? 3'h6 : T162;
-  assign T162 = T91 ? 3'h6 : T163;
-  assign T163 = T90 ? 3'h0 : T164;
-  assign T164 = T89 ? 3'h1 : T165;
-  assign T165 = T88 ? 3'h3 : T166;
-  assign T166 = T87 ? 3'h4 : T167;
-  assign T167 = T86 ? 3'h7 : T168;
-  assign T168 = T85 ? 3'h5 : T169;
-  assign T169 = T84 ? 3'h0 : T170;
-  assign T170 = T83 ? 3'h2 : T171;
-  assign T171 = T82 ? 3'h2 : T172;
-  assign T172 = T81 ? 3'h0 : T173;
-  assign T173 = T80 ? 3'h1 : T174;
-  assign T174 = T79 ? 3'h3 : T175;
-  assign T175 = T78 ? 3'h2 : T176;
-  assign T176 = T77 ? 3'h2 : T177;
-  assign T177 = T76 ? 3'h2 : T178;
-  assign T178 = T158 ? 3'h6 : T179;
-  assign T179 = T157 ? 3'h4 : T180;
-  assign T180 = T156 ? 3'h7 : 3'h0;
+  assign alu_op = inst_we ? 3'h0 : T155;
+  assign T155 = T90 ? 3'h2 : T156;
+  assign T156 = T89 ? 3'h2 : T157;
+  assign T157 = T88 ? 3'h6 : T158;
+  assign T158 = T87 ? 3'h6 : T159;
+  assign T159 = T86 ? 3'h0 : T160;
+  assign T160 = T85 ? 3'h1 : T161;
+  assign T161 = T84 ? 3'h3 : T162;
+  assign T162 = T83 ? 3'h4 : T163;
+  assign T163 = T82 ? 3'h7 : T164;
+  assign T164 = T81 ? 3'h5 : T165;
+  assign T165 = T80 ? 3'h0 : T166;
+  assign T166 = T79 ? 3'h2 : T167;
+  assign T167 = T78 ? 3'h2 : T168;
+  assign T168 = T77 ? 3'h0 : T169;
+  assign T169 = T76 ? 3'h1 : T170;
+  assign T170 = T75 ? 3'h3 : T171;
+  assign T171 = T74 ? 3'h2 : T172;
+  assign T172 = T73 ? 3'h2 : T173;
+  assign T173 = T72 ? 3'h2 : T174;
+  assign T174 = T154 ? 3'h6 : T175;
+  assign T175 = T153 ? 3'h6 : T176;
+  assign T176 = T152 ? 3'h7 : 3'h0;
   assign io_ctrl_reg_we_dst = reg_we_dst;
-  assign reg_we_dst = inst_we ? 2'h0 : T181;
-  assign T181 = T94 ? 2'h0 : T182;
-  assign T182 = T93 ? 2'h0 : T183;
-  assign T183 = T92 ? 2'h0 : T184;
-  assign T184 = T91 ? 2'h0 : T185;
-  assign T185 = T90 ? 2'h0 : T186;
-  assign T186 = T89 ? 2'h0 : T187;
-  assign T187 = T88 ? 2'h0 : T188;
-  assign T188 = T87 ? 2'h0 : T189;
-  assign T189 = T86 ? 2'h0 : T190;
-  assign T190 = T85 ? 2'h0 : T191;
-  assign T191 = T84 ? 2'h0 : T192;
-  assign T192 = T83 ? 2'h1 : T193;
-  assign T193 = T82 ? 2'h1 : T194;
-  assign T194 = T81 ? 2'h1 : T195;
-  assign T195 = T80 ? 2'h1 : T196;
-  assign T196 = T79 ? 2'h1 : T197;
-  assign T197 = T78 ? 2'h1 : T198;
-  assign T198 = T77 ? 2'h1 : T199;
-  assign T199 = T76 ? 2'h0 : T200;
-  assign T200 = T158 ? 2'h0 : T201;
-  assign T201 = T157 ? 2'h0 : T202;
-  assign T202 = T156 ? 2'h1 : T203;
-  assign T203 = T206 ? 2'h0 : T204;
-  assign T204 = T205 ? 2'h2 : 2'h0;
-  assign T205 = state == 32'h18;
-  assign T206 = state == 32'h17;
+  assign reg_we_dst = inst_we ? 2'h0 : T177;
+  assign T177 = T90 ? 2'h0 : T178;
+  assign T178 = T89 ? 2'h0 : T179;
+  assign T179 = T88 ? 2'h0 : T180;
+  assign T180 = T87 ? 2'h0 : T181;
+  assign T181 = T86 ? 2'h0 : T182;
+  assign T182 = T85 ? 2'h0 : T183;
+  assign T183 = T84 ? 2'h0 : T184;
+  assign T184 = T83 ? 2'h0 : T185;
+  assign T185 = T82 ? 2'h0 : T186;
+  assign T186 = T81 ? 2'h0 : T187;
+  assign T187 = T80 ? 2'h0 : T188;
+  assign T188 = T79 ? 2'h1 : T189;
+  assign T189 = T78 ? 2'h1 : T190;
+  assign T190 = T77 ? 2'h1 : T191;
+  assign T191 = T76 ? 2'h1 : T192;
+  assign T192 = T75 ? 2'h1 : T193;
+  assign T193 = T74 ? 2'h1 : T194;
+  assign T194 = T73 ? 2'h1 : T195;
+  assign T195 = T72 ? 2'h0 : T196;
+  assign T196 = T154 ? 2'h0 : T197;
+  assign T197 = T153 ? 2'h0 : T198;
+  assign T198 = T152 ? 2'h1 : T199;
+  assign T199 = T202 ? 2'h0 : T200;
+  assign T200 = T201 ? 2'h2 : 2'h0;
+  assign T201 = state == 32'h18;
+  assign T202 = state == 32'h17;
   assign io_ctrl_reg_we_src = reg_we_src;
-  assign reg_we_src = inst_we ? 2'h0 : T207;
-  assign T207 = T94 ? 2'h0 : T208;
-  assign T208 = T93 ? 2'h0 : T209;
-  assign T209 = T92 ? 2'h0 : T210;
-  assign T210 = T91 ? 2'h0 : T211;
-  assign T211 = T90 ? 2'h0 : T212;
-  assign T212 = T89 ? 2'h0 : T213;
-  assign T213 = T88 ? 2'h0 : T214;
-  assign T214 = T87 ? 2'h0 : T215;
-  assign T215 = T86 ? 2'h0 : T216;
-  assign T216 = T85 ? 2'h0 : T217;
-  assign T217 = T84 ? 2'h0 : T218;
-  assign T218 = T83 ? 2'h0 : T219;
-  assign T219 = T82 ? 2'h0 : T220;
-  assign T220 = T81 ? 2'h0 : T221;
-  assign T221 = T80 ? 2'h0 : T222;
-  assign T222 = T79 ? 2'h0 : T223;
-  assign T223 = T78 ? 2'h3 : T224;
-  assign T224 = T77 ? 2'h1 : T225;
-  assign T225 = T76 ? 2'h0 : T226;
-  assign T226 = T158 ? 2'h0 : T227;
-  assign T227 = T157 ? 2'h0 : T228;
-  assign T228 = T156 ? 2'h0 : T229;
-  assign T229 = T206 ? 2'h0 : T230;
-  assign T230 = T205 ? 2'h2 : 2'h0;
+  assign reg_we_src = inst_we ? 2'h0 : T203;
+  assign T203 = T90 ? 2'h0 : T204;
+  assign T204 = T89 ? 2'h0 : T205;
+  assign T205 = T88 ? 2'h0 : T206;
+  assign T206 = T87 ? 2'h0 : T207;
+  assign T207 = T86 ? 2'h0 : T208;
+  assign T208 = T85 ? 2'h0 : T209;
+  assign T209 = T84 ? 2'h0 : T210;
+  assign T210 = T83 ? 2'h0 : T211;
+  assign T211 = T82 ? 2'h0 : T212;
+  assign T212 = T81 ? 2'h0 : T213;
+  assign T213 = T80 ? 2'h0 : T214;
+  assign T214 = T79 ? 2'h0 : T215;
+  assign T215 = T78 ? 2'h0 : T216;
+  assign T216 = T77 ? 2'h0 : T217;
+  assign T217 = T76 ? 2'h0 : T218;
+  assign T218 = T75 ? 2'h0 : T219;
+  assign T219 = T74 ? 2'h3 : T220;
+  assign T220 = T73 ? 2'h1 : T221;
+  assign T221 = T72 ? 2'h0 : T222;
+  assign T222 = T154 ? 2'h0 : T223;
+  assign T223 = T153 ? 2'h0 : T224;
+  assign T224 = T152 ? 2'h0 : T225;
+  assign T225 = T202 ? 2'h0 : T226;
+  assign T226 = T201 ? 2'h2 : 2'h0;
   assign io_ctrl_reg_we = reg_we;
-  assign reg_we = inst_we ? 1'h0 : T231;
-  assign T231 = T94 ? 1'h1 : T232;
-  assign T232 = T93 ? 1'h1 : T233;
-  assign T233 = T92 ? 1'h1 : T234;
-  assign T234 = T91 ? 1'h1 : T235;
-  assign T235 = T90 ? 1'h1 : T236;
-  assign T236 = T89 ? 1'h1 : T237;
-  assign T237 = T88 ? 1'h1 : T238;
-  assign T238 = T87 ? 1'h1 : T239;
-  assign T239 = T86 ? 1'h1 : T240;
-  assign T240 = T85 ? 1'h1 : T241;
-  assign T241 = T84 ? 1'h0 : T242;
-  assign T242 = T83 ? 1'h1 : T243;
-  assign T243 = T82 ? 1'h1 : T244;
-  assign T244 = T81 ? 1'h1 : T245;
-  assign T245 = T80 ? 1'h1 : T246;
-  assign T246 = T79 ? 1'h1 : T247;
-  assign T247 = T78 ? 1'h1 : T248;
-  assign T248 = T77 ? 1'h1 : T249;
-  assign T249 = T76 ? 1'h0 : T250;
-  assign T250 = T158 ? 1'h0 : T251;
-  assign T251 = T157 ? 1'h0 : T252;
-  assign T252 = T156 ? 1'h1 : T253;
-  assign T253 = T206 ? 1'h0 : T205;
+  assign reg_we = inst_we ? 1'h0 : T227;
+  assign T227 = T90 ? 1'h1 : T228;
+  assign T228 = T89 ? 1'h1 : T229;
+  assign T229 = T88 ? 1'h1 : T230;
+  assign T230 = T87 ? 1'h1 : T231;
+  assign T231 = T86 ? 1'h1 : T232;
+  assign T232 = T85 ? 1'h1 : T233;
+  assign T233 = T84 ? 1'h1 : T234;
+  assign T234 = T83 ? 1'h1 : T235;
+  assign T235 = T82 ? 1'h1 : T236;
+  assign T236 = T81 ? 1'h1 : T237;
+  assign T237 = T80 ? 1'h0 : T238;
+  assign T238 = T79 ? 1'h1 : T239;
+  assign T239 = T78 ? 1'h1 : T240;
+  assign T240 = T77 ? 1'h1 : T241;
+  assign T241 = T76 ? 1'h1 : T242;
+  assign T242 = T75 ? 1'h1 : T243;
+  assign T243 = T74 ? 1'h1 : T244;
+  assign T244 = T73 ? 1'h1 : T245;
+  assign T245 = T72 ? 1'h0 : T246;
+  assign T246 = T154 ? 1'h0 : T247;
+  assign T247 = T153 ? 1'h0 : T248;
+  assign T248 = T152 ? 1'h1 : T249;
+  assign T249 = T202 ? 1'h0 : T201;
   assign io_ctrl_pc_next_sel = pc_next_sel;
-  assign pc_next_sel = inst_we ? 2'h0 : T254;
-  assign T254 = T94 ? 2'h0 : T255;
-  assign T255 = T93 ? 2'h0 : T256;
-  assign T256 = T92 ? 2'h0 : T257;
-  assign T257 = T91 ? 2'h0 : T258;
-  assign T258 = T90 ? 2'h0 : T259;
-  assign T259 = T89 ? 2'h0 : T260;
-  assign T260 = T88 ? 2'h0 : T261;
-  assign T261 = T87 ? 2'h0 : T262;
-  assign T262 = T86 ? 2'h0 : T263;
-  assign T263 = T85 ? 2'h0 : T264;
-  assign T264 = T84 ? 2'h3 : T265;
-  assign T265 = T83 ? 2'h0 : T266;
-  assign T266 = T82 ? 2'h0 : T267;
-  assign T267 = T81 ? 2'h0 : T268;
-  assign T268 = T80 ? 2'h0 : T269;
-  assign T269 = T79 ? 2'h0 : T270;
-  assign T270 = T78 ? 2'h0 : T271;
-  assign T271 = T77 ? 2'h0 : T272;
-  assign T272 = T76 ? 2'h0 : T273;
-  assign T273 = T158 ? 2'h1 : T274;
-  assign T274 = T157 ? 2'h1 : T275;
-  assign T275 = T156 ? 2'h0 : T276;
-  assign T276 = T206 ? 2'h2 : T277;
-  assign T277 = T205 ? 2'h2 : 2'h0;
+  assign pc_next_sel = inst_we ? 2'h0 : T250;
+  assign T250 = T90 ? 2'h0 : T251;
+  assign T251 = T89 ? 2'h0 : T252;
+  assign T252 = T88 ? 2'h0 : T253;
+  assign T253 = T87 ? 2'h0 : T254;
+  assign T254 = T86 ? 2'h0 : T255;
+  assign T255 = T85 ? 2'h0 : T256;
+  assign T256 = T84 ? 2'h0 : T257;
+  assign T257 = T83 ? 2'h0 : T258;
+  assign T258 = T82 ? 2'h0 : T259;
+  assign T259 = T81 ? 2'h0 : T260;
+  assign T260 = T80 ? 2'h3 : T261;
+  assign T261 = T79 ? 2'h0 : T262;
+  assign T262 = T78 ? 2'h0 : T263;
+  assign T263 = T77 ? 2'h0 : T264;
+  assign T264 = T76 ? 2'h0 : T265;
+  assign T265 = T75 ? 2'h0 : T266;
+  assign T266 = T74 ? 2'h0 : T267;
+  assign T267 = T73 ? 2'h0 : T268;
+  assign T268 = T72 ? 2'h0 : T269;
+  assign T269 = T154 ? 2'h1 : T270;
+  assign T270 = T153 ? 2'h1 : T271;
+  assign T271 = T152 ? 2'h0 : T272;
+  assign T272 = T202 ? 2'h2 : T273;
+  assign T273 = T201 ? 2'h2 : 2'h0;
   assign io_ctrl_pc_we = pc_we;
   assign pc_we = inst_we == 1'h0;
   assign io_ctrl_inst_we = inst_we;
@@ -653,15 +644,6 @@ module Ctrlpath(input clk, input reset,
     end else if(io_bus_ack) begin
       state <= next_state;
     end
-`ifndef SYNTHESIS
-// synthesis translate_off
-`ifdef PRINTF_COND
-    if (`PRINTF_COND)
-`endif
-      if (T0)
-        $fwrite(32'h80000002, " - state: %d\n", T2);
-// synthesis translate_on
-`endif
   end
 endmodule
 
@@ -901,86 +883,88 @@ module Datapath(input clk, input reset,
     input [1:0] io_reg_we_src,
     input [1:0] io_reg_we_dst,
     input [2:0] io_alu_op,
-    input  io_alu_b_sel,
+    input [1:0] io_alu_b_sel,
     output[31:0] io_alu_out,
     output[31:0] io_data_out
 );
 
-  wire[31:0] T54;
+  wire[31:0] T57;
   wire[47:0] T0;
   wire[47:0] T1;
   wire[47:0] T2;
   wire[47:0] T3;
   wire[47:0] T4;
   wire T5;
-  wire[47:0] T55;
+  wire[47:0] T58;
   wire[31:0] T6;
   reg [31:0] pc;
-  wire[31:0] T56;
-  wire[32:0] T57;
+  wire[31:0] T59;
+  wire[32:0] T60;
   wire[32:0] T7;
-  wire[32:0] T58;
+  wire[32:0] T61;
   wire[32:0] pc_next;
   wire[32:0] T8;
-  wire[32:0] T59;
+  wire[32:0] T62;
   wire[31:0] T9;
   wire[31:0] T10;
   wire T11;
-  wire[31:0] T60;
+  wire[31:0] T63;
   wire[27:0] T12;
   wire[27:0] T13;
   wire[25:0] T14;
   reg [31:0] inst_reg;
-  wire[31:0] T61;
+  wire[31:0] T64;
   wire[31:0] T15;
-  wire[27:0] T62;
+  wire[27:0] T65;
   wire[3:0] T16;
   wire T17;
   wire[32:0] T18;
-  wire[32:0] T63;
+  wire[32:0] T66;
   wire[31:0] T19;
   wire[31:0] T20;
   wire T21;
-  wire[32:0] T22;
-  wire[32:0] T23;
+  wire T22;
+  wire T23;
   wire[32:0] T24;
   wire[32:0] T25;
-  wire[32:0] T64;
-  wire[17:0] T26;
-  wire[15:0] T27;
-  wire[15:0] T28;
-  wire[14:0] T65;
-  wire T66;
-  wire T29;
-  wire T30;
   wire[32:0] T67;
-  wire[31:0] T31;
+  wire[17:0] T26;
+  wire[17:0] T27;
+  wire[15:0] T28;
+  wire[14:0] T68;
+  wire T69;
+  wire[32:0] T29;
+  wire[32:0] T30;
+  wire[32:0] T31;
   wire T32;
   wire T33;
-  wire[47:0] T68;
   wire T34;
-  wire[47:0] T69;
-  wire T35;
-  wire[4:0] T36;
-  wire[4:0] T37;
-  wire[4:0] T38;
+  wire[32:0] T70;
+  wire[31:0] T35;
+  wire T36;
+  wire T37;
+  wire[47:0] T71;
+  wire T38;
+  wire[47:0] T72;
   wire T39;
   wire[4:0] T40;
-  wire T41;
+  wire[4:0] T41;
   wire[4:0] T42;
   wire T43;
   wire[4:0] T44;
-  wire[4:0] T45;
-  wire[31:0] T46;
-  wire[31:0] T47;
-  wire[31:0] T48;
-  wire[31:0] T49;
-  wire T50;
-  wire[1:0] T70;
-  wire[31:0] T71;
-  wire[15:0] T51;
-  wire T52;
+  wire T45;
+  wire[4:0] T46;
+  wire T47;
+  wire[4:0] T48;
+  wire[4:0] T49;
+  wire[31:0] T50;
+  wire[31:0] T51;
+  wire[31:0] T52;
   wire T53;
+  wire[31:0] T73;
+  wire[15:0] T54;
+  wire T55;
+  wire T56;
   wire[31:0] alu_io_out;
   wire alu_io_zero;
   wire[31:0] regfile_io_douta;
@@ -997,79 +981,81 @@ module Datapath(input clk, input reset,
 // synthesis translate_on
 `endif
 
-  assign T54 = T0[5'h1f:1'h0];
-  assign T0 = T35 ? T69 : T1;
-  assign T1 = T34 ? T68 : T2;
-  assign T2 = T33 ? T55 : T3;
+  assign T57 = T0[5'h1f:1'h0];
+  assign T0 = T39 ? T72 : T1;
+  assign T1 = T38 ? T71 : T2;
+  assign T2 = T37 ? T58 : T3;
   assign T3 = T5 ? T4 : 48'h0;
   assign T4 = alu_io_out << 5'h10;
   assign T5 = io_reg_we_src == 2'h3;
-  assign T55 = {16'h0, T6};
+  assign T58 = {16'h0, T6};
   assign T6 = pc + 32'h4;
-  assign T56 = T57[5'h1f:1'h0];
-  assign T57 = reset ? 33'h0 : T7;
-  assign T7 = io_pc_we ? pc_next : T58;
-  assign T58 = {1'h0, pc};
-  assign pc_next = T32 ? T67 : T8;
-  assign T8 = T30 ? T18 : T59;
-  assign T59 = {1'h0, T9};
-  assign T9 = T17 ? T60 : T10;
+  assign T59 = T60[5'h1f:1'h0];
+  assign T60 = reset ? 33'h0 : T7;
+  assign T7 = io_pc_we ? pc_next : T61;
+  assign T61 = {1'h0, pc};
+  assign pc_next = T36 ? T70 : T8;
+  assign T8 = T34 ? T18 : T62;
+  assign T62 = {1'h0, T9};
+  assign T9 = T17 ? T63 : T10;
   assign T10 = T11 ? regfile_io_douta : 32'h0;
   assign T11 = io_pc_next_sel == 2'h3;
-  assign T60 = {4'h0, T12};
-  assign T12 = T62 | T13;
+  assign T63 = {4'h0, T12};
+  assign T12 = T65 | T13;
   assign T13 = T14 << 2'h2;
   assign T14 = inst_reg[5'h19:1'h0];
-  assign T61 = reset ? 32'h0 : T15;
+  assign T64 = reset ? 32'h0 : T15;
   assign T15 = io_inst_we ? io_bus_data : inst_reg;
-  assign T62 = {24'h0, T16};
+  assign T65 = {24'h0, T16};
   assign T16 = pc[5'h1f:5'h1c];
   assign T17 = io_pc_next_sel == 2'h2;
-  assign T18 = T29 ? T22 : T63;
-  assign T63 = {1'h0, T19};
+  assign T18 = T32 ? T24 : T66;
+  assign T66 = {1'h0, T19};
   assign T19 = T21 ? T20 : 32'h0;
   assign T20 = pc + 32'h4;
-  assign T21 = alu_io_zero == 1'h0;
-  assign T22 = T23;
-  assign T23 = T64 + T24;
+  assign T21 = ~ T22;
+  assign T22 = alu_io_zero ^ T23;
+  assign T23 = io_alu_b_sel == 2'h2;
   assign T24 = T25;
-  assign T25 = {1'h0, pc};
-  assign T64 = {T65, T26};
-  assign T26 = T27 << 2'h2;
-  assign T27 = T28;
+  assign T25 = T29 + T67;
+  assign T67 = {T68, T26};
+  assign T26 = T27;
+  assign T27 = T28 << 2'h2;
   assign T28 = inst_reg[4'hf:1'h0];
-  assign T65 = T66 ? 15'h7fff : 15'h0;
-  assign T66 = T26[5'h11:5'h11];
-  assign T29 = alu_io_zero == 1'h1;
-  assign T30 = io_pc_next_sel == 2'h1;
-  assign T67 = {1'h0, T31};
-  assign T31 = pc + 32'h4;
-  assign T32 = io_pc_next_sel == 2'h0;
-  assign T33 = io_reg_we_src == 2'h2;
-  assign T68 = {16'h0, io_bus_data};
-  assign T34 = io_reg_we_src == 2'h1;
-  assign T69 = {16'h0, alu_io_out};
-  assign T35 = io_reg_we_src == 2'h0;
-  assign T36 = T43 ? T42 : T37;
-  assign T37 = T41 ? T40 : T38;
-  assign T38 = T39 ? 5'h1f : 5'h0;
-  assign T39 = io_reg_we_dst == 2'h2;
-  assign T40 = inst_reg[5'h14:5'h10];
-  assign T41 = io_reg_we_dst == 2'h1;
-  assign T42 = inst_reg[4'hf:4'hb];
-  assign T43 = io_reg_we_dst == 2'h0;
+  assign T68 = T69 ? 15'h7fff : 15'h0;
+  assign T69 = T26[5'h11:5'h11];
+  assign T29 = 33'h4 + T30;
+  assign T30 = T31;
+  assign T31 = {1'h0, pc};
+  assign T32 = alu_io_zero ^ T33;
+  assign T33 = io_alu_b_sel == 2'h2;
+  assign T34 = io_pc_next_sel == 2'h1;
+  assign T70 = {1'h0, T35};
+  assign T35 = pc + 32'h4;
+  assign T36 = io_pc_next_sel == 2'h0;
+  assign T37 = io_reg_we_src == 2'h2;
+  assign T71 = {16'h0, io_bus_data};
+  assign T38 = io_reg_we_src == 2'h1;
+  assign T72 = {16'h0, alu_io_out};
+  assign T39 = io_reg_we_src == 2'h0;
+  assign T40 = T47 ? T46 : T41;
+  assign T41 = T45 ? T44 : T42;
+  assign T42 = T43 ? 5'h1f : 5'h0;
+  assign T43 = io_reg_we_dst == 2'h2;
   assign T44 = inst_reg[5'h14:5'h10];
-  assign T45 = inst_reg[5'h19:5'h15];
-  assign T46 = T53 ? regfile_io_doutb : T47;
-  assign T47 = T52 ? T71 : T48;
-  assign T48 = T50 ? T49 : 32'h0;
-  assign T49 = ~ regfile_io_doutb;
-  assign T50 = T70 == 2'h2;
-  assign T70 = {1'h0, io_alu_b_sel};
-  assign T71 = {16'h0, T51};
-  assign T51 = inst_reg[4'hf:1'h0];
-  assign T52 = io_alu_b_sel == 1'h1;
-  assign T53 = io_alu_b_sel == 1'h0;
+  assign T45 = io_reg_we_dst == 2'h1;
+  assign T46 = inst_reg[4'hf:4'hb];
+  assign T47 = io_reg_we_dst == 2'h0;
+  assign T48 = inst_reg[5'h14:5'h10];
+  assign T49 = inst_reg[5'h19:5'h15];
+  assign T50 = T56 ? regfile_io_doutb : T51;
+  assign T51 = T55 ? T73 : T52;
+  assign T52 = T53 ? regfile_io_doutb : 32'h0;
+  assign T53 = io_alu_b_sel == 2'h2;
+  assign T73 = {16'h0, T54};
+  assign T54 = inst_reg[4'hf:1'h0];
+  assign T55 = io_alu_b_sel == 2'h1;
+  assign T56 = io_alu_b_sel == 2'h0;
   assign io_data_out = regfile_io_doutb;
   assign io_alu_out = alu_io_out;
   assign io_pc_out = pc;
@@ -1077,22 +1063,22 @@ module Datapath(input clk, input reset,
   ALU alu(
        .io_alu_op( io_alu_op ),
        .io_in_a( regfile_io_douta ),
-       .io_in_b( T46 ),
+       .io_in_b( T50 ),
        .io_out( alu_io_out ),
        .io_zero( alu_io_zero )
   );
   Register_File regfile(.clk(clk), .reset(reset),
-       .io_addra( T45 ),
+       .io_addra( T49 ),
        .io_douta( regfile_io_douta ),
-       .io_addrb( T44 ),
+       .io_addrb( T48 ),
        .io_doutb( regfile_io_doutb ),
-       .io_wtaddr( T36 ),
-       .io_wtdata( T54 ),
+       .io_wtaddr( T40 ),
+       .io_wtdata( T57 ),
        .io_we( io_reg_we )
   );
 
   always @(posedge clk) begin
-    pc <= T56;
+    pc <= T59;
     if(reset) begin
       inst_reg <= 32'h0;
     end else if(io_inst_we) begin
@@ -1123,7 +1109,7 @@ module Core(input clk, input reset,
   wire[1:0] cpath_io_ctrl_reg_we_src;
   wire[1:0] cpath_io_ctrl_reg_we_dst;
   wire[2:0] cpath_io_ctrl_alu_op;
-  wire cpath_io_ctrl_alu_b_sel;
+  wire[1:0] cpath_io_ctrl_alu_b_sel;
   wire[31:0] cpath_io_bus_addr;
   wire[31:0] cpath_io_bus_dat2;
   wire cpath_io_bus_sel;
@@ -1597,21 +1583,12 @@ module WB_Led_Dev(input clk, input reset,
 );
 
   reg [7:0] led_data;
-  wire[7:0] T9;
-  wire[31:0] T10;
-  wire[31:0] T0;
-  wire[31:0] T11;
-  wire T1;
-  reg [31:0] data_out;
-  wire[31:0] T12;
-  wire[31:0] T2;
+  wire[7:0] T2;
   wire[31:0] T3;
+  wire[31:0] T0;
   wire[31:0] T4;
-  wire[31:0] T13;
-  wire T5;
-  wire T6;
-  wire T7;
-  wire T8;
+  wire T1;
+  wire[31:0] T5;
 
 `ifndef SYNTHESIS
 // synthesis translate_off
@@ -1619,44 +1596,26 @@ module WB_Led_Dev(input clk, input reset,
   initial begin
     #0.002;
     led_data = {1{$random}};
-    data_out = {1{$random}};
   end
 // synthesis translate_on
 `endif
 
   assign io_LED = led_data;
-  assign T9 = T10[3'h7:1'h0];
-  assign T10 = reset ? 32'h0 : T0;
-  assign T0 = T1 ? io_bus_dat2 : T11;
-  assign T11 = {24'h0, led_data};
+  assign T2 = T3[3'h7:1'h0];
+  assign T3 = reset ? 32'h0 : T0;
+  assign T0 = T1 ? io_bus_dat2 : T4;
+  assign T4 = {24'h0, led_data};
   assign T1 = io_bus_sel & io_bus_we;
   assign io_bus_ack = 1'h1;
-  assign io_bus_dat4 = data_out;
-  assign T12 = reset ? 32'h0 : T2;
-  assign T2 = T7 ? 32'h0 : T3;
-  assign T3 = T5 ? T13 : T4;
-  assign T4 = T1 ? io_bus_dat2 : data_out;
-  assign T13 = {24'h0, led_data};
-  assign T5 = T6 & io_bus_sel;
-  assign T6 = T1 ^ 1'h1;
-  assign T7 = T8 ^ 1'h1;
-  assign T8 = T1 | io_bus_sel;
+  assign io_bus_dat4 = T5;
+  assign T5 = {24'h0, led_data};
 
   always @(posedge clk) begin
-    led_data <= T9;
-    if(reset) begin
-      data_out <= 32'h0;
-    end else if(T7) begin
-      data_out <= 32'h0;
-    end else if(T5) begin
-      data_out <= T13;
-    end else if(T1) begin
-      data_out <= io_bus_dat2;
-    end
+    led_data <= T2;
   end
 endmodule
 
-module WB_Empty_Dev(
+module WB_Counter_Dev(input clk, input reset,
     input [31:0] io_bus_addr,
     input [31:0] io_bus_dat2,
     output[31:0] io_bus_dat4,
@@ -1665,10 +1624,34 @@ module WB_Empty_Dev(
     output io_bus_ack
 );
 
+  reg [31:0] counter;
+  wire[31:0] T1;
+  wire[31:0] counter_next;
+  wire[31:0] T0;
 
+`ifndef SYNTHESIS
+// synthesis translate_off
+  integer initvar;
+  initial begin
+    #0.002;
+    counter = {1{$random}};
+  end
+// synthesis translate_on
+`endif
 
   assign io_bus_ack = 1'h1;
-  assign io_bus_dat4 = 32'h0;
+  assign io_bus_dat4 = counter;
+  assign T1 = reset ? 32'h0 : counter_next;
+  assign counter_next = T0;
+  assign T0 = counter + 32'h1;
+
+  always @(posedge clk) begin
+    if(reset) begin
+      counter <= 32'h0;
+    end else begin
+      counter <= counter_next;
+    end
+  end
 endmodule
 
 module WB_Seven_Dev(input clk, input reset,
@@ -2235,6 +2218,208 @@ module WB_VGA_Dev(input clk, input reset,
   end
 endmodule
 
+module WB_Keyboard_Dev(input clk, input reset,
+    input  io_keyboard_kb_clk,
+    input  io_keyboard_kb_data,
+    input [31:0] io_bus_addr,
+    input [31:0] io_bus_dat2,
+    output[31:0] io_bus_dat4,
+    input  io_bus_sel,
+    input  io_bus_we,
+    output io_bus_ack
+);
+
+  wire[31:0] T0;
+  wire[31:0] T1;
+  wire[31:0] T2;
+  wire[31:0] T3;
+  reg [31:0] c_count;
+  wire[31:0] T46;
+  wire[31:0] T4;
+  wire[31:0] T5;
+  wire T6;
+  wire T7;
+  wire T8;
+  wire T9;
+  wire[1:0] T10;
+  wire[31:0] T47;
+  reg [15:0] cooked;
+  wire[15:0] T48;
+  wire[15:0] T11;
+  wire[15:0] T49;
+  wire[8:0] T12;
+  wire[8:0] T13;
+  reg  p_f0;
+  wire T50;
+  wire T14;
+  wire T15;
+  wire T16;
+  wire[8:0] T51;
+  wire[5:0] cooked_next;
+  wire[5:0] T17;
+  wire[5:0] T18;
+  wire[5:0] T19;
+  wire[5:0] T20;
+  wire[5:0] T21;
+  wire[5:0] T22;
+  wire[5:0] T23;
+  wire[5:0] T24;
+  wire[5:0] T25;
+  wire[5:0] T52;
+  wire[3:0] T26;
+  wire[3:0] T27;
+  wire T28;
+  wire T29;
+  wire T30;
+  wire T31;
+  wire T32;
+  wire T33;
+  wire T34;
+  wire T35;
+  wire T36;
+  wire T37;
+  wire T38;
+  wire T39;
+  wire T40;
+  reg [31:0] r_count;
+  wire[31:0] T53;
+  wire[31:0] T41;
+  wire[31:0] T42;
+  wire T43;
+  wire[31:0] T54;
+  reg [7:0] raw;
+  wire[7:0] T55;
+  wire[7:0] T44;
+  wire T45;
+  wire[7:0] kb_io_ctrl_data;
+  wire kb_io_ctrl_interrupt;
+
+`ifndef SYNTHESIS
+// synthesis translate_off
+  integer initvar;
+  initial begin
+    #0.002;
+    c_count = {1{$random}};
+    cooked = {1{$random}};
+    p_f0 = {1{$random}};
+    r_count = {1{$random}};
+    raw = {1{$random}};
+  end
+// synthesis translate_on
+`endif
+
+  assign io_bus_ack = 1'h1;
+  assign io_bus_dat4 = T0;
+  assign T0 = T45 ? T54 : T1;
+  assign T1 = T43 ? r_count : T2;
+  assign T2 = T40 ? T47 : T3;
+  assign T3 = T9 ? c_count : 32'h0;
+  assign T46 = reset ? 32'h0 : T4;
+  assign T4 = T6 ? T5 : c_count;
+  assign T5 = c_count + 32'h1;
+  assign T6 = kb_io_ctrl_interrupt & T7;
+  assign T7 = T8 ^ 1'h1;
+  assign T8 = kb_io_ctrl_data == 8'hf0;
+  assign T9 = T10 == 2'h3;
+  assign T10 = io_bus_addr[1'h1:1'h0];
+  assign T47 = {16'h0, cooked};
+  assign T48 = reset ? 16'h0 : T11;
+  assign T11 = T6 ? T49 : cooked;
+  assign T49 = {7'h0, T12};
+  assign T12 = T51 + T13;
+  assign T13 = p_f0 << 4'h8;
+  assign T50 = reset ? 1'h0 : T14;
+  assign T14 = T6 ? 1'h0 : T15;
+  assign T15 = T16 ? 1'h1 : p_f0;
+  assign T16 = kb_io_ctrl_interrupt & T8;
+  assign T51 = {3'h0, cooked_next};
+  assign cooked_next = T39 ? 6'h31 : T17;
+  assign T17 = T38 ? 6'h32 : T18;
+  assign T18 = T37 ? 6'h33 : T19;
+  assign T19 = T36 ? 6'h34 : T20;
+  assign T20 = T35 ? 6'h35 : T21;
+  assign T21 = T34 ? 6'h36 : T22;
+  assign T22 = T33 ? 6'h37 : T23;
+  assign T23 = T32 ? 6'h38 : T24;
+  assign T24 = T31 ? 6'h39 : T25;
+  assign T25 = T30 ? 6'h30 : T52;
+  assign T52 = {2'h0, T26};
+  assign T26 = T29 ? 4'h8 : T27;
+  assign T27 = T28 ? 4'hd : 4'h0;
+  assign T28 = kb_io_ctrl_data == 8'h5a;
+  assign T29 = kb_io_ctrl_data == 8'h66;
+  assign T30 = kb_io_ctrl_data == 8'h45;
+  assign T31 = kb_io_ctrl_data == 8'h46;
+  assign T32 = kb_io_ctrl_data == 8'h3e;
+  assign T33 = kb_io_ctrl_data == 8'h3d;
+  assign T34 = kb_io_ctrl_data == 8'h36;
+  assign T35 = kb_io_ctrl_data == 8'h2e;
+  assign T36 = kb_io_ctrl_data == 8'h25;
+  assign T37 = kb_io_ctrl_data == 8'h26;
+  assign T38 = kb_io_ctrl_data == 8'h1e;
+  assign T39 = kb_io_ctrl_data == 8'h16;
+  assign T40 = T10 == 2'h2;
+  assign T53 = reset ? 32'h0 : T41;
+  assign T41 = kb_io_ctrl_interrupt ? T42 : r_count;
+  assign T42 = r_count + 32'h1;
+  assign T43 = T10 == 2'h1;
+  assign T54 = {24'h0, raw};
+  assign T55 = reset ? 8'h0 : T44;
+  assign T44 = kb_io_ctrl_interrupt ? kb_io_ctrl_data : raw;
+  assign T45 = T10 == 2'h0;
+  Keyboard_Ctrl kb(.clk(clk),
+       .io_keyboard_kb_clk( io_keyboard_kb_clk ),
+       .io_keyboard_kb_data( io_keyboard_kb_data ),
+       .io_ctrl_data( kb_io_ctrl_data ),
+       .io_ctrl_interrupt( kb_io_ctrl_interrupt )
+  );
+
+  always @(posedge clk) begin
+    if(reset) begin
+      c_count <= 32'h0;
+    end else if(T6) begin
+      c_count <= T5;
+    end
+    if(reset) begin
+      cooked <= 16'h0;
+    end else if(T6) begin
+      cooked <= T49;
+    end
+    if(reset) begin
+      p_f0 <= 1'h0;
+    end else if(T6) begin
+      p_f0 <= 1'h0;
+    end else if(T16) begin
+      p_f0 <= 1'h1;
+    end
+    if(reset) begin
+      r_count <= 32'h0;
+    end else if(kb_io_ctrl_interrupt) begin
+      r_count <= T42;
+    end
+    if(reset) begin
+      raw <= 8'h0;
+    end else if(kb_io_ctrl_interrupt) begin
+      raw <= kb_io_ctrl_data;
+    end
+  end
+endmodule
+
+module WB_Empty_Dev(
+    input [31:0] io_bus_addr,
+    input [31:0] io_bus_dat2,
+    output[31:0] io_bus_dat4,
+    input  io_bus_sel,
+    input  io_bus_we,
+    output io_bus_ack
+);
+
+
+
+  assign io_bus_ack = 1'h1;
+  assign io_bus_dat4 = 32'h0;
+endmodule
+
 module Devices(input clk, input reset,
     input [31:0] io_bus_addr,
     input [31:0] io_bus_dat2,
@@ -2254,7 +2439,9 @@ module Devices(input clk, input reset,
     output[9:0] io_devices_RAM_addra,
     output[31:0] io_devices_RAM_dina,
     output io_devices_RAM_we,
-    input [31:0] io_devices_RAM_douta
+    input [31:0] io_devices_RAM_douta,
+    input  io_devices_KEYBOARD_kb_clk,
+    input  io_devices_KEYBOARD_kb_data
 );
 
   wire[31:0] bus_io_from_cpu_dat4;
@@ -2314,8 +2501,6 @@ module Devices(input clk, input reset,
   wire ram_dev_io_ram_we;
   wire[31:0] WB_Empty_Dev_io_bus_dat4;
   wire WB_Empty_Dev_io_bus_ack;
-  wire[31:0] WB_Empty_Dev_1_io_bus_dat4;
-  wire WB_Empty_Dev_1_io_bus_ack;
   wire[2:0] vga_dev_io_vga_red;
   wire[2:0] vga_dev_io_vga_green;
   wire[1:0] vga_dev_io_vga_blue;
@@ -2323,6 +2508,8 @@ module Devices(input clk, input reset,
   wire vga_dev_io_vga_vsync;
   wire[31:0] vga_dev_io_bus_dat4;
   wire vga_dev_io_bus_ack;
+  wire[31:0] kb_dev_io_bus_dat4;
+  wire kb_dev_io_bus_ack;
 
 
   assign io_devices_RAM_we = ram_dev_io_ram_we;
@@ -2346,16 +2533,16 @@ module Devices(input clk, input reset,
        .io_from_cpu_ack( bus_io_from_cpu_ack ),
        .io_slaves_7_addr( bus_io_slaves_7_addr ),
        .io_slaves_7_dat2( bus_io_slaves_7_dat2 ),
-       .io_slaves_7_dat4( WB_Empty_Dev_1_io_bus_dat4 ),
+       .io_slaves_7_dat4( WB_Empty_Dev_io_bus_dat4 ),
        .io_slaves_7_sel( bus_io_slaves_7_sel ),
        .io_slaves_7_we( bus_io_slaves_7_we ),
-       .io_slaves_7_ack( WB_Empty_Dev_1_io_bus_ack ),
+       .io_slaves_7_ack( WB_Empty_Dev_io_bus_ack ),
        .io_slaves_6_addr( bus_io_slaves_6_addr ),
        .io_slaves_6_dat2( bus_io_slaves_6_dat2 ),
-       .io_slaves_6_dat4( WB_Empty_Dev_io_bus_dat4 ),
+       .io_slaves_6_dat4( kb_dev_io_bus_dat4 ),
        .io_slaves_6_sel( bus_io_slaves_6_sel ),
        .io_slaves_6_we( bus_io_slaves_6_we ),
-       .io_slaves_6_ack( WB_Empty_Dev_io_bus_ack ),
+       .io_slaves_6_ack( kb_dev_io_bus_ack ),
        .io_slaves_5_addr( bus_io_slaves_5_addr ),
        .io_slaves_5_dat2( bus_io_slaves_5_dat2 ),
        .io_slaves_5_dat4( vga_dev_io_bus_dat4 ),
@@ -2426,7 +2613,7 @@ module Devices(input clk, input reset,
        .io_bus_ack( led_io_bus_ack ),
        .io_LED( led_io_LED )
   );
-  WB_Empty_Dev counter(
+  WB_Counter_Dev counter(.clk(clk), .reset(reset),
        .io_bus_addr( bus_io_slaves_3_addr ),
        .io_bus_dat2( bus_io_slaves_3_dat2 ),
        .io_bus_dat4( counter_io_bus_dat4 ),
@@ -2468,21 +2655,23 @@ module Devices(input clk, input reset,
        .io_bus_we( bus_io_slaves_5_we ),
        .io_bus_ack( vga_dev_io_bus_ack )
   );
-  WB_Empty_Dev WB_Empty_Dev(
+  WB_Keyboard_Dev kb_dev(.clk(clk), .reset(reset),
+       .io_keyboard_kb_clk( io_devices_KEYBOARD_kb_clk ),
+       .io_keyboard_kb_data( io_devices_KEYBOARD_kb_data ),
        .io_bus_addr( bus_io_slaves_6_addr ),
        .io_bus_dat2( bus_io_slaves_6_dat2 ),
-       .io_bus_dat4( WB_Empty_Dev_io_bus_dat4 ),
+       .io_bus_dat4( kb_dev_io_bus_dat4 ),
        .io_bus_sel( bus_io_slaves_6_sel ),
        .io_bus_we( bus_io_slaves_6_we ),
-       .io_bus_ack( WB_Empty_Dev_io_bus_ack )
+       .io_bus_ack( kb_dev_io_bus_ack )
   );
-  WB_Empty_Dev WB_Empty_Dev_1(
+  WB_Empty_Dev WB_Empty_Dev(
        .io_bus_addr( bus_io_slaves_7_addr ),
        .io_bus_dat2( bus_io_slaves_7_dat2 ),
-       .io_bus_dat4( WB_Empty_Dev_1_io_bus_dat4 ),
+       .io_bus_dat4( WB_Empty_Dev_io_bus_dat4 ),
        .io_bus_sel( bus_io_slaves_7_sel ),
        .io_bus_we( bus_io_slaves_7_we ),
-       .io_bus_ack( WB_Empty_Dev_1_io_bus_ack )
+       .io_bus_ack( WB_Empty_Dev_io_bus_ack )
   );
 endmodule
 
@@ -2500,6 +2689,8 @@ module SOC(input clk, input reset,
     output[31:0] io_devices_RAM_dina,
     output io_devices_RAM_we,
     input [31:0] io_devices_RAM_douta,
+    input  io_devices_KEYBOARD_kb_clk,
+    input  io_devices_KEYBOARD_kb_data,
     output[31:0] io_debug_inst_out,
     output[31:0] io_debug_bus_addr,
     output[31:0] io_debug_bus_dat2,
@@ -2577,7 +2768,9 @@ module SOC(input clk, input reset,
        .io_devices_RAM_addra( dev_io_devices_RAM_addra ),
        .io_devices_RAM_dina( dev_io_devices_RAM_dina ),
        .io_devices_RAM_we( dev_io_devices_RAM_we ),
-       .io_devices_RAM_douta( io_devices_RAM_douta )
+       .io_devices_RAM_douta( io_devices_RAM_douta ),
+       .io_devices_KEYBOARD_kb_clk( io_devices_KEYBOARD_kb_clk ),
+       .io_devices_KEYBOARD_kb_data( io_devices_KEYBOARD_kb_data )
   );
 endmodule
 

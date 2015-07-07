@@ -22,6 +22,8 @@ module top(
     input clk,
     input [7:0] SW,
     input [4:0] BTN,
+    input k_clk,
+    input k_data,
     output [7:0] LED,
     output [7:0] SEG,
     output [3:0] AN,
@@ -62,7 +64,9 @@ module top(
     .io_devices_RAM_we(ram_we),
     .io_devices_RAM_addra(ram_addr),
     .io_devices_RAM_dina(ram_dina),
-    .io_devices_RAM_douta(ram_douta)
+    .io_devices_RAM_douta(ram_douta),
+    .io_devices_KEYBOARD_kb_clk(k_clk),
+    .io_devices_KEYBOARD_kb_data(k_data)
   );
 
   Seven_Segment_Wrapper seven_seg(

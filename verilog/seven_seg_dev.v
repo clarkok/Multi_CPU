@@ -36,6 +36,7 @@ module Seven_Seg_Dev(
 
   initial begin
     SEGMENT = 0;
+    AN = 0;
   end
 
   always @ (scanning) begin

@@ -32,11 +32,11 @@ class CtrlIO extends Bundle {
          */
          
     val alu_op = UInt(OUTPUT, 3)
-    val alu_b_sel = UInt(OUTPUT, 1)
+    val alu_b_sel = UInt(OUTPUT, 2)
         /**
          * 0 : rt
          * 1 : imm
-         * 2 : ~rt // for bne
+         * 2 : rt // only for bne
          */
     val alu_out = UInt(INPUT, 32)
          
@@ -165,7 +165,7 @@ class Ctrlpath extends Module {
                     List(Bool(false),   Bool(true),     UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.BNE ->
-                    List(Bool(false),   Bool(true),     UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(4),    UInt(2),
+                    List(Bool(false),   Bool(true),     UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(2),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SLTI ->
                     List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(7),    UInt(1),
@@ -242,19 +242,6 @@ class Ctrlpath extends Module {
         )
     
     when(io.bus.ack) {
-        printf(" - state: %d\n", state);
-        /*
-        printf(" - ctrls: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n", inst_we, pc_we, pc_next_sel, reg_we, reg_we_src, reg_we_dst, alu_op, alu_b_sel, bus_sel, bus_we, bus_addr_src);
-        printf(" - inst: %x\n", inst);
-        printf(" - inst_reg: %x\n", io.ctrl.inst);
-        printf(" - next_state: %d\n", next_state);
-        printf(" -- bus_addr: %x\n", io.bus.addr);
-        printf(" -- bus_dat2: %x\n", io.bus.dat2);
-        printf(" -- bus_dat4: %x\n", io.bus.dat4);
-        printf(" -- alu_out: %x\n", io.ctrl.alu_out);
-        printf("\n");
-        */
-        
         state := next_state
     }
     

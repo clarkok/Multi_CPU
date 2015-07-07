@@ -18,13 +18,21 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module keyboard_ctrl(
+module Keyboard_Ctrl(
     input clk,
-    input k_data,
-    input k_clk,
-    output reg [7:0] data,
-    output reg interrupt
+    input io_keyboard_kb_data,
+    input io_keyboard_kb_clk,
+    output [7:0] io_ctrl_data,
+    output io_ctrl_interrupt
     );
+    
+  wire k_clk;
+  wire k_data;
+  reg [7:0] data;
+  
+  assign k_clk = io_keyboard_kb_clk;
+  assign k_data = io_keyboard_kb_data;
+  assign io_ctrl_data = data;
 
   reg [3:0] counter = 0, last = 0;
 
@@ -73,12 +81,10 @@ module keyboard_ctrl(
       end
     endcase
   end
+  
+  assign io_ctrl_interrupt = (last != 4'd10 && counter == 4'd10);
 
   always @ (posedge clk) begin
-    if (last != 4'd10 && counter == 4'd10)
-      interrupt = 1;
-    else
-      interrupt = 0;
-    last = counter;
+    last <= counter;
   end
 endmodule

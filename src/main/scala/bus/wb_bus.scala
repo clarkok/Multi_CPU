@@ -75,14 +75,4 @@ class WB_Bus() extends Module {
                 (ram_op === Bool(true)) -> io.ram_slave.ack
             )
         )
-    
-    /*
-    when(ack_out) {
-        printf(" --- current_slave: %d\n", current_slave);
-        printf(" --- cpu_we: %d\n", io.from_cpu.we);
-        printf(" --- ram_op: %d\n", ram_op);
-        printf(" --- led_sel: %d\n", io.slaves(2).sel);
-        printf(" --- led_we: %d\n", io.slaves(2).we);
-    }
-    */
 }

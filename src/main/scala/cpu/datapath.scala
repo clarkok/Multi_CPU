@@ -65,7 +65,7 @@ class Datapath extends Module {
     
     when(io.inst_we) { inst_reg := io.bus_data }
     io.inst := inst_reg
-    
+        
     val pc_next = 
         MuxLookup(
             io.pc_next_sel,
@@ -76,9 +76,9 @@ class Datapath extends Module {
                     MuxCase(
                         UInt(0, 32),
                         Array(
-                            (alu.io.zero === Bool(true)) ->
-                                (pc + (inst_reg.apply(15, 0).toSInt() << UInt(2))).toUInt(),
-                            (alu.io.zero === Bool(false)) ->
+                            (alu.io.zero ^ (io.alu_b_sel === UInt(2))) ->
+                                (pc + SInt(4) + (inst_reg.apply(15, 0) << UInt(2)).toSInt()).toUInt(),
+                            ~(alu.io.zero ^ (io.alu_b_sel === UInt(2))) ->
                                 (pc + UInt(4))
                         )
                     )
@@ -124,7 +124,7 @@ class Datapath extends Module {
             Array(
                 UInt(0) -> regfile.io.doutb,
                 UInt(1) -> inst_reg.apply(15, 0),
-                UInt(2) -> (~regfile.io.doutb)
+                UInt(2) -> regfile.io.doutb
             )
         )
     io.alu_out := alu.io.out
