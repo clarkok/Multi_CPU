@@ -29,8 +29,8 @@ class VGA_Ctrl extends Module {
     }
     
     // pixel counter
-    val p_counter = Reg(init = UInt(0, width=2))
-    when(p_counter === UInt(3))
+    val p_counter = Reg(init = UInt(0, width=1))
+    when(p_counter === UInt(1))
         { p_counter := UInt(0) }
     .otherwise
         { p_counter := p_counter + UInt(1) }
@@ -87,43 +87,36 @@ class VGA_Ctrl extends Module {
         (v_state === VGA_Constants.S_DP)
     
     io.vga.red := 
-        MuxLookup(
+        Mux(
             output_en,
-            UInt(0),
-            Array(
-                Bool(true) -> io.ctrl.color.apply(7, 5),
-                Bool(false) -> UInt(0)
-            )
+            io.ctrl.color.apply(7, 5),
+            UInt(0)
         )
     io.vga.green :=
-        MuxLookup(
+        Mux(
             output_en,
-            UInt(0),
-            Array(
-                Bool(true) -> io.ctrl.color.apply(4, 2),
-                Bool(false) -> UInt(0)
-            )
+            io.ctrl.color.apply(4, 2),
+            UInt(0)
         )
     io.vga.blue :=
-        MuxLookup(
+        Mux(
             output_en,
-            UInt(0),
-            Array(
-                Bool(true) -> io.ctrl.color.apply(1, 0),
-                Bool(false) -> UInt(0)
-            )
+            io.ctrl.color.apply(1, 0),
+            UInt(0)
         )
     
     io.ctrl.x :=
-        MuxCase(
-            UInt(0),
-            Array((h_state === VGA_Constants.S_DP) -> (h_counter - UInt(144)))
+        Mux(
+            (h_state === VGA_Constants.S_DP),
+            (h_counter - UInt(144)),
+            UInt(0)
         )
         
     io.ctrl.y :=
-        MuxCase(
-            UInt(0),
-            Array((v_state === VGA_Constants.S_DP) -> (v_counter - UInt(31)))
+        Mux(
+            (v_state === VGA_Constants.S_DP),
+            (v_counter - UInt(31)),
+            UInt(0)
         )
     io.vga.vsync :=
         MuxLookup(
@@ -211,21 +204,35 @@ class WB_VGA_Dev extends Module {
         color.apply(4) ## color.apply(4)
     
     vga.io.ctrl.color :=
-        MuxCase(
-            UInt(0),
-            Array(
-                (mask.apply(UInt(7) - vga.io.ctrl.x.apply(2, 0)) === UInt(0))
-                    -> back_color,
-                (mask.apply(UInt(7) - vga.io.ctrl.x.apply(2, 0)) === UInt(1))
-                    -> front_color
-            )
+        Mux(
+            mask.apply(UInt(7) - vga.io.ctrl.x.apply(2, 0)),
+            front_color,
+            back_color
         )
     
     io.vga := vga.io.vga
     
-    io.bus.dat4 := vmem(io.bus.addr)
-    io.bus.ack := Bool(true)
-    when(io.bus.sel & io.bus.we) {
-        vmem(io.bus.addr.apply(11, 0)) := io.bus.dat2
+    val out_buf     = Reg(init = UInt(0, 32))
+    val addr_buf    = Reg(init = UInt(0, 32))
+    val data_buf    = Reg(init = UInt(0, 32))
+    val is_writing  = Reg(init = Bool(false))
+    val ack         = Reg(init = Bool(true))
+    
+    when(io.bus.sel) {
+        ack         := ~ack
+        addr_buf    := io.bus.addr.apply(11, 0)
+        data_buf    := io.bus.dat2
+        is_writing  := io.bus.we
     }
+    .otherwise {
+        ack         := Bool(true)
+    }
+    
+    when(~ack) {
+        when(is_writing)    { vmem(addr_buf)    := data_buf }
+        .otherwise          { out_buf           := vmem(addr_buf) }
+    }
+    
+    io.bus.dat4 := out_buf
+    io.bus.ack  := ack
 }

@@ -34,45 +34,17 @@ class WB_Bus() extends Module {
     io.ram_slave.we := ram_op & io.from_cpu.we
     io.ram_slave.dat2 := io.from_cpu.dat2
     
-    io.from_cpu.dat4 := MuxCase(
-            UInt(0, 32),
-            Array(
-                (ram_op === Bool(false)) -> MuxLookup(
-                        current_slave,
-                        UInt(0, 32),
-                        Array(
-                            UInt(0) -> io.slaves(0).dat4,
-                            UInt(1) -> io.slaves(1).dat4,
-                            UInt(2) -> io.slaves(2).dat4,
-                            UInt(3) -> io.slaves(3).dat4,
-                            UInt(4) -> io.slaves(4).dat4,
-                            UInt(5) -> io.slaves(5).dat4,
-                            UInt(6) -> io.slaves(6).dat4,
-                            UInt(7) -> io.slaves(7).dat4
-                        )
-                    ),
-                (ram_op === Bool(true)) -> io.ram_slave.dat4
-            )
+    io.from_cpu.dat4    :=
+        Mux(
+            ram_op,
+            io.ram_slave.dat4,
+            io.slaves(current_slave).dat4
         )
     
-    io.from_cpu.ack := MuxCase(
-            Bool(false),
-            Array(
-                (ram_op === Bool(false)) -> MuxLookup(
-                        current_slave,
-                        Bool(false),
-                        Array(
-                            UInt(0) -> io.slaves(0).ack,
-                            UInt(1) -> io.slaves(1).ack,
-                            UInt(2) -> io.slaves(2).ack,
-                            UInt(3) -> io.slaves(3).ack,
-                            UInt(4) -> io.slaves(4).ack,
-                            UInt(5) -> io.slaves(5).ack,
-                            UInt(6) -> io.slaves(6).ack,
-                            UInt(7) -> io.slaves(7).ack
-                        )
-                    ),
-                (ram_op === Bool(true)) -> io.ram_slave.ack
-            )
+    io.from_cpu.ack     :=
+        Mux(
+            ram_op,
+            io.ram_slave.ack,
+            io.slaves(current_slave).ack
         )
 }

@@ -5,8 +5,9 @@
 
 ##Clock signal
 Net "clk" LOC=V10 | IOSTANDARD=LVCMOS33;
+Net "clk" PERIOD = 20ns;
 #Net "clk" TNM_NET = sys_clk_pin;
-#TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 100000 kHz;
+#TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 50000 kHz;
 
 ## onBoard USB controller
 #Net "EppAstb" LOC = H1 | IOSTANDARD = LVCMOS33; #Bank = 3, pin name = IO_L41N_GCLK26_M3DQ5, Sch name = U-FLAGA

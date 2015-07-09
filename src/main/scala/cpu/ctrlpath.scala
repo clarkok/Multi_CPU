@@ -41,37 +41,54 @@ class CtrlIO extends Bundle {
     val alu_out = UInt(INPUT, 32)
          
     val data_out = UInt(INPUT, 32)
+    
+    val ack = Bool(OUTPUT)
 }
 
 object States {
-    final val FETCH = UInt(0, 32)
+    final val FETCH = UInt(0)
     
-    final val ADD   = UInt(1, 32)
-    final val ADDU  = UInt(2, 32)
-    final val SUB   = UInt(3, 32)
-    final val SUBU  = UInt(4, 32)
-    final val AND   = UInt(5, 32)
-    final val OR    = UInt(6, 32)
-    final val XOR   = UInt(7, 32)
-    final val NOR   = UInt(8, 32)
-    final val SLT   = UInt(9, 32)
-    final val SRLV  = UInt(10, 32)
-    final val JR    = UInt(11, 32)
+    final val ADD   = UInt(1)
+    final val ADDU  = UInt(2)
+    final val SUB   = UInt(3)
+    final val SUBU  = UInt(4)
+    final val AND   = UInt(5)
+    final val OR    = UInt(6)
+    final val XOR   = UInt(7)
+    final val NOR   = UInt(8)
+    final val SLT   = UInt(9)
+    final val SRLV  = UInt(10)
+    final val JR    = UInt(11)
     
-    final val ADDI  = UInt(12, 32)
-    final val ADDIU = UInt(13, 32)
-    final val ANDI  = UInt(14, 32)
-    final val ORI   = UInt(15, 32)
-    final val XORI  = UInt(16, 32)
-    final val LUI   = UInt(17, 32)
-    final val LW    = UInt(18, 32)
-    final val SW    = UInt(19, 32)
+    final val ADDI  = UInt(12)
+    final val ADDIU = UInt(13)
+    final val ANDI  = UInt(14)
+    final val ORI   = UInt(15)
+    final val XORI  = UInt(16)
+    final val LUI   = UInt(17)
+    final val LW    = UInt(18)
+    final val SW    = UInt(19)
     
-    final val BEQ   = UInt(20, 32)
-    final val BNE   = UInt(21, 32)
-    final val SLTI  = UInt(22, 32)
-    final val J     = UInt(23, 32)
-    final val JAL   = UInt(24, 32)
+    final val BEQ   = UInt(20)
+    final val BNE   = UInt(21)
+    final val SLTI  = UInt(22)
+    final val J     = UInt(23)
+    final val JAL   = UInt(24)
+    
+    final val R_WB  = UInt(100)
+    final val I_WB  = UInt(101)
+    final val L_WB  = UInt(102)
+    
+    final val PC_INC    = UInt(110)
+    
+    final val LW_BUS    = UInt(120)
+    final val LW_WB     = UInt(121)
+    final val SW_BUS    = UInt(122)
+    
+    final val BEQ_SET_PC    = UInt(150)
+    final val BNE_SET_PC    = UInt(151)
+    
+    final val DECODE    = UInt(200)
 }
 
 class Ctrlpath extends Module {
@@ -97,79 +114,125 @@ class Ctrlpath extends Module {
                 States.FETCH -> 
                     List(Bool(true),    Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
                          Bool(true),    Bool(false),    Bool(false)),
+                
+                States.DECODE ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
+                         Bool(false),   Bool(false),    Bool(false)),
                          
                 States.ADD -> 
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(2),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.ADDU ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(2),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SUB -> 
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(6),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SUBU ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(6),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.AND ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(0),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.OR ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(1),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(1),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.XOR ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(3),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(3),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.NOR ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(4),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(4),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SLT ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(7),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(7),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SRLV ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(0),    UInt(5),    UInt(0),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(5),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.JR ->
                     List(Bool(false),   Bool(true),     UInt(3),        Bool(false),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
-                
+                         
+                States.R_WB ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(true ),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
+                         Bool(false),   Bool(false),    Bool(false)),
+                         
     /**
      *                  inst_we,        pc_we,          pc_next_sel,    reg_we,         reg_we_src, reg_we_dst, alu_op,     alu_b_sel
      *                  bus_sel,        bus_we,         bus_addr_alu
      */
                 States.ADDI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(2),    UInt(1),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(2),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.ADDIU ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(2),    UInt(1),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(2),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.ANDI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(0),    UInt(1),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(0),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.ORI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(1),    UInt(1),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(1),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.XORI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(3),    UInt(1),
-                         Bool(false),   Bool(false),    Bool(false)),
-                States.LUI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(3),    UInt(1),    UInt(2),    UInt(1),
-                         Bool(false),   Bool(false),    Bool(false)),
-                States.LW ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(1),    UInt(1),    UInt(2),    UInt(1),
-                         Bool(true),    Bool(false),    Bool(true)),
-                States.SW ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(1),
-                         Bool(true),    Bool(true),     Bool(true)),
-                         
-                States.BEQ ->
-                    List(Bool(false),   Bool(true),     UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
-                         Bool(false),   Bool(false),    Bool(false)),
-                States.BNE ->
-                    List(Bool(false),   Bool(true),     UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(2),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(3),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
                 States.SLTI ->
-                    List(Bool(false),   Bool(true),     UInt(0),        Bool(true),     UInt(0),    UInt(1),    UInt(7),    UInt(1),
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(1),    UInt(7),    UInt(1),
                          Bool(false),   Bool(false),    Bool(false)),
+                         
+                States.I_WB ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(true ),    UInt(0),    UInt(1),    UInt(0),    UInt(0),
+                         Bool(false),   Bool(false),    Bool(false)),
+                         
+                States.LUI ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(3),    UInt(1),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(false),    Bool(false)),
+                         
+                States.L_WB ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(true ),    UInt(3),    UInt(1),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(false),    Bool(false)),
+                         
+                States.LW ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(1),    UInt(1),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(false),    Bool(true)),
+                States.SW ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(true),     Bool(true)),
+                         
+                States.LW_BUS ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(1),    UInt(1),    UInt(2),    UInt(1),
+                         Bool(true ),   Bool(false),    Bool(true)),
+                         
+                States.LW_WB ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(true ),    UInt(1),    UInt(1),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(false),    Bool(true)),
+                         
+                States.SW_BUS ->
+                    List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(1),
+                         Bool(true ),   Bool(true),     Bool(true)),
+                         
+                States.PC_INC ->
+                    List(Bool(false),   Bool(true ),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(1),
+                         Bool(false),   Bool(false),    Bool(false)),
+                         
+    /**
+     *                  inst_we,        pc_we,          pc_next_sel,    reg_we,         reg_we_src, reg_we_dst, alu_op,     alu_b_sel
+     *                  bus_sel,        bus_we,         bus_addr_alu
+     */
+                States.BEQ ->
+                    List(Bool(false),   Bool(false),    UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
+                         Bool(false),   Bool(false),    Bool(false)),
+                States.BEQ_SET_PC ->
+                    List(Bool(false),   Bool(true ),    UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(0),
+                         Bool(false),   Bool(false),    Bool(false)),
+                
+                States.BNE ->
+                    List(Bool(false),   Bool(false),    UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(2),
+                         Bool(false),   Bool(false),    Bool(false)),
+                States.BNE_SET_PC ->
+                    List(Bool(false),   Bool(true ),    UInt(1),        Bool(false),    UInt(0),    UInt(0),    UInt(6),    UInt(2),
+                         Bool(false),   Bool(false),    Bool(false)),
+                
                 States.J ->
                     List(Bool(false),   Bool(true),     UInt(2),        Bool(false),    UInt(0),    UInt(0),    UInt(0),    UInt(0),
                          Bool(false),   Bool(false),    Bool(false)),
@@ -181,23 +244,61 @@ class Ctrlpath extends Module {
         
     val (inst_we : Bool) :: (pc_we : Bool) :: pc_next_sel :: (reg_we : Bool) :: reg_we_src :: reg_we_dst :: alu_op :: alu_b_sel :: (bus_sel : Bool) :: (bus_we : Bool) :: bus_addr_src :: Nil = ctrl_signal
     
-    val inst = MuxCase(
-            io.ctrl.inst,
-            Array(
-                (state === States.FETCH) -> io.bus.dat4
-            )
-        )
-    val inst_op = inst.apply(31, 26)
-    val inst_func = inst.apply(5, 0)
+    val bus_addr_buf    = Reg(init = UInt(0, 32))
+    val bus_dat2_buf    = Reg(init = UInt(0, 32))
+    val bus_dat4_buf    = Reg(init = UInt(0, 32))
     
-    io.ctrl.bus_data := io.bus.dat4
+    val inst        = io.ctrl.inst
+    val inst_op     = inst.apply(31, 26)
+    val inst_func   = inst.apply(5, 0)
     
     next_state :=
         MuxLookup(
             state,
             States.FETCH,
             Array(
-                States.FETCH -> (
+                States.ADD      -> States.R_WB,
+                States.ADDU     -> States.R_WB,
+                States.SUB      -> States.R_WB,
+                States.SUBU     -> States.R_WB,
+                States.AND      -> States.R_WB,
+                States.OR       -> States.R_WB,
+                States.XOR      -> States.R_WB,
+                States.NOR      -> States.R_WB,
+                States.SLT      -> States.R_WB,
+                States.SRLV     -> States.R_WB,
+                
+                States.ADDI     -> States.I_WB,
+                States.ADDIU    -> States.I_WB,
+                States.ANDI     -> States.I_WB,
+                States.ORI      -> States.I_WB,
+                States.XORI     -> States.I_WB,
+                States.SLTI     -> States.I_WB,
+                States.LUI      -> States.L_WB,
+                
+                States.LW       -> States.LW_BUS,
+                States.LW_BUS   -> States.LW_WB,
+                States.LW_WB    -> States.PC_INC,
+                
+                States.SW       -> States.SW_BUS,
+                States.SW_BUS   -> States.PC_INC,
+                
+                States.BEQ      -> States.BEQ_SET_PC,
+                States.BNE      -> States.BNE_SET_PC,
+                
+                States.R_WB     -> States.PC_INC,
+                States.I_WB     -> States.PC_INC,
+                States.L_WB     -> States.PC_INC,
+                
+                States.PC_INC   -> States.FETCH,
+                States.BEQ_SET_PC   -> States.FETCH,
+                States.BNE_SET_PC   -> States.FETCH,
+                
+                States.JAL      -> States.FETCH,
+    
+                States.FETCH    -> States.DECODE,
+                
+                States.DECODE -> (
                     MuxLookup(
                         inst_op,
                         States.FETCH,
@@ -253,16 +354,16 @@ class Ctrlpath extends Module {
     io.ctrl.reg_we_dst  := reg_we_dst
     io.ctrl.alu_op      := alu_op
     io.ctrl.alu_b_sel   := alu_b_sel
+    io.ctrl.ack         := io.bus.ack
+    io.ctrl.bus_data    := io.bus.dat4
     
     io.bus.sel          := bus_sel
     io.bus.we           := bus_we
-    io.bus.addr         := MuxLookup(
-            bus_addr_src,
-            UInt(0),
-            Array(
-                Bool(true) -> io.ctrl.alu_out,
-                Bool(false) -> io.ctrl.pc_out
-            )
+    io.bus.addr         := 
+        Mux(
+            bus_addr_src.toBool(),
+            io.ctrl.alu_out,
+            io.ctrl.pc_out
         )
     io.bus.dat2         := io.ctrl.data_out
     

@@ -66,7 +66,13 @@ module top(
     .io_devices_RAM_dina(ram_dina),
     .io_devices_RAM_douta(ram_douta),
     .io_devices_KEYBOARD_kb_clk(k_clk),
-    .io_devices_KEYBOARD_kb_data(k_data)
+    .io_devices_KEYBOARD_kb_data(k_data) /*,
+    .io_debug_inst_out(inst_out),
+    .io_debug_bus_addr(bus_addr),
+    .io_debug_bus_dat2(bus_dat2),
+    .io_debug_bus_dat4(bus_dat4),
+    .io_debug_pc_out(pc_out)
+    */
   );
 
   Seven_Segment_Wrapper seven_seg(
