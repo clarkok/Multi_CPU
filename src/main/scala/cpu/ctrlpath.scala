@@ -95,7 +95,7 @@ class Ctrlpath extends Module {
     val io = new Bundle {
         val ctrl = new CtrlIO()
         val bus = new WB_IO()
-        val debug = new Debug_IO()
+        // val debug = new Debug_IO()
     }
     
     val next_state = UInt(width=32)
@@ -197,7 +197,7 @@ class Ctrlpath extends Module {
                          Bool(false),   Bool(false),    Bool(true)),
                 States.SW ->
                     List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(0),    UInt(0),    UInt(2),    UInt(1),
-                         Bool(false),   Bool(true),     Bool(true)),
+                         Bool(false),   Bool(false),    Bool(true)),
                          
                 States.LW_BUS ->
                     List(Bool(false),   Bool(false),    UInt(0),        Bool(false),    UInt(1),    UInt(1),    UInt(2),    UInt(1),
@@ -367,10 +367,12 @@ class Ctrlpath extends Module {
         )
     io.bus.dat2         := io.ctrl.data_out
     
+    /*
     // FOR DEBUG
     io.debug.inst_out   := inst
     io.debug.bus_addr   := io.bus.addr
     io.debug.bus_dat2   := io.bus.dat2
     io.debug.bus_dat4   := io.bus.dat4
     io.debug.pc_out     := io.ctrl.pc_out
+    */
 }

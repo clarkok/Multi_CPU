@@ -27,10 +27,10 @@ module VGA_Ctrl(input clk, input reset,
   wire T11;
   wire T12;
   wire T13;
-  reg  p_counter;
-  wire T79;
-  wire T14;
-  wire T15;
+  reg [1:0] p_counter;
+  wire[1:0] T79;
+  wire[1:0] T14;
+  wire[1:0] T15;
   wire T16;
   wire T17;
   wire[31:0] T18;
@@ -124,12 +124,12 @@ module VGA_Ctrl(input clk, input reset,
   assign T10 = h_counter + 32'h1;
   assign T11 = T13 & T12;
   assign T12 = T7 ^ 1'h1;
-  assign T13 = p_counter == 1'h0;
-  assign T79 = reset ? 1'h0 : T14;
-  assign T14 = T16 ? T15 : 1'h0;
-  assign T15 = p_counter + 1'h1;
+  assign T13 = p_counter == 2'h0;
+  assign T79 = reset ? 2'h0 : T14;
+  assign T14 = T16 ? T15 : 2'h0;
+  assign T15 = p_counter + 2'h1;
   assign T16 = T17 ^ 1'h1;
-  assign T17 = p_counter == 1'h1;
+  assign T17 = p_counter == 2'h3;
   assign T18 = v_counter + 32'h1;
   assign T19 = T6 & T20;
   assign T20 = T5 ^ 1'h1;
@@ -215,11 +215,11 @@ module VGA_Ctrl(input clk, input reset,
       h_counter <= 32'h0;
     end
     if(reset) begin
-      p_counter <= 1'h0;
+      p_counter <= 2'h0;
     end else if(T16) begin
       p_counter <= T15;
     end else begin
-      p_counter <= 1'h0;
+      p_counter <= 2'h0;
     end
   end
 endmodule

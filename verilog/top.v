@@ -35,11 +35,6 @@ module top(
     );
 
   wire [31:0] disp_num;
-  wire [31:0] inst_out;
-  wire [31:0] bus_addr;
-  wire [31:0] bus_dat2;
-  wire [31:0] bus_dat4;
-  wire [31:0] pc_out;
   
   reg reset = 1;
   always @(posedge clk) reset <= 0;
@@ -66,13 +61,7 @@ module top(
     .io_devices_RAM_dina(ram_dina),
     .io_devices_RAM_douta(ram_douta),
     .io_devices_KEYBOARD_kb_clk(k_clk),
-    .io_devices_KEYBOARD_kb_data(k_data) /*,
-    .io_debug_inst_out(inst_out),
-    .io_debug_bus_addr(bus_addr),
-    .io_debug_bus_dat2(bus_dat2),
-    .io_debug_bus_dat4(bus_dat4),
-    .io_debug_pc_out(pc_out)
-    */
+    .io_devices_KEYBOARD_kb_data(k_data)
   );
 
   Seven_Segment_Wrapper seven_seg(
@@ -80,13 +69,13 @@ module top(
     .high_degree(SW[0]),
     .sel(SW[7:5]),
     .disp_num(disp_num),
-    .test1(inst_out),
-    .test2(bus_addr),
-    .test3(bus_dat2),
-    .test4(bus_dat4),
+    .test1(32'b0),
+    .test2(32'b0),
+    .test3(32'b0),
+    .test4(32'b0),
     .test5(32'b0),
     .test6(32'b0),
-    .test7(pc_out),
+    .test7(32'b0),
     .SEGMENT(SEG),
     .AN(AN)
   );

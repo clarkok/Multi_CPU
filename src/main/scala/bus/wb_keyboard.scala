@@ -30,6 +30,8 @@ class WB_Keyboard_Dev extends Module {
     val c_count = Reg(init = UInt(0, width=32))
     val cooked  = Reg(init = UInt(0, width=16))
     
+    val k_clk_test_reg  = Reg(init = UInt(0, width=32))
+    
     val p_f0    = Reg(init = Bool(false))
     val cooked_next =
         MuxLookup(
@@ -46,8 +48,45 @@ class WB_Keyboard_Dev extends Module {
                 UInt(0x3E) -> UInt(56), // 8
                 UInt(0x46) -> UInt(57), // 9
                 UInt(0x45) -> UInt(48), // 0
+                UInt(0x4E) -> UInt(45), // -
+                UInt(0x55) -> UInt(43), // +
+                UInt(0x15) -> UInt('q'),
+                UInt(0x1D) -> UInt('w'),
+                UInt(0x24) -> UInt('e'),
+                UInt(0x2D) -> UInt('r'),
+                UInt(0x2C) -> UInt('t'),
+                UInt(0x35) -> UInt('y'),
+                UInt(0x3C) -> UInt('u'),
+                UInt(0x43) -> UInt('i'),
+                UInt(0x44) -> UInt('o'),
+                UInt(0x4D) -> UInt('p'),
+                UInt(0x54) -> UInt('['),
+                UInt(0x5B) -> UInt(']'),
+                UInt(0x1C) -> UInt('a'),
+                UInt(0x1B) -> UInt('s'),
+                UInt(0x23) -> UInt('d'),
+                UInt(0x2B) -> UInt('f'),
+                UInt(0x34) -> UInt('g'),
+                UInt(0x33) -> UInt('h'),
+                UInt(0x3B) -> UInt('j'),
+                UInt(0x42) -> UInt('k'),
+                UInt(0x4B) -> UInt('l'),
+                UInt(0x4C) -> UInt(';'),
+                UInt(0x52) -> UInt('\''),
+                UInt(0x1A) -> UInt('z'),
+                UInt(0x22) -> UInt('x'),
+                UInt(0x21) -> UInt('c'),
+                UInt(0x2A) -> UInt('v'),
+                UInt(0x32) -> UInt('b'),
+                UInt(0x31) -> UInt('n'),
+                UInt(0x3A) -> UInt('m'),
+                UInt(0x41) -> UInt(','),
+                UInt(0x49) -> UInt('.'),
+                UInt(0x4A) -> UInt('/'),
+                UInt(0x29) -> UInt(' '),
                 UInt(0x66) -> UInt(8),  // Backspace
-                UInt(0x5A) -> UInt(13)  // Enter
+                // UInt(0x5A) -> UInt(13)  // Enter
+                UInt(0x5A) -> UInt(10)  // Enter to '\n'
             )
         )
     
@@ -58,23 +97,31 @@ class WB_Keyboard_Dev extends Module {
         when(kb.io.ctrl.data === UInt("hF0")) {
             p_f0 := Bool(true)
         }
-        .otherwise {
+        .elsewhen(cooked_next.orR()) {
             cooked := cooked_next + (p_f0 << UInt(8))
             c_count := c_count + UInt(1)
             p_f0 := Bool(false)
         }
     }
     
+    when(io.keyboard.kb_clk) {
+        k_clk_test_reg := k_clk_test_reg + UInt(1)
+    }
+    
     io.bus.ack := Bool(true)
     io.bus.dat4 :=
         MuxLookup(
-            io.bus.addr.apply(1, 0),
+            io.bus.addr.apply(2, 0),
             UInt(0),
             Array(
                 UInt(0) -> raw,
                 UInt(1) -> r_count,
                 UInt(2) -> cooked,
-                UInt(3) -> c_count
+                UInt(3) -> c_count,
+                UInt(4) -> k_clk_test_reg,
+                UInt(5) -> k_clk_test_reg,
+                UInt(6) -> k_clk_test_reg,
+                UInt(7) -> k_clk_test_reg
             )
         )
 }

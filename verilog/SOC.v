@@ -18,12 +18,7 @@ module Ctrlpath(input clk, input reset,
     input [31:0] io_bus_dat4,
     output io_bus_sel,
     output io_bus_we,
-    input  io_bus_ack,
-    output[31:0] io_debug_inst_out,
-    output[31:0] io_debug_bus_addr,
-    output[31:0] io_debug_bus_dat2,
-    output[31:0] io_debug_bus_dat4,
-    output[31:0] io_debug_pc_out
+    input  io_bus_ack
 );
 
   wire bus_we;
@@ -517,11 +512,6 @@ module Ctrlpath(input clk, input reset,
 // synthesis translate_on
 `endif
 
-  assign io_debug_pc_out = io_ctrl_pc_out;
-  assign io_debug_bus_dat4 = io_bus_dat4;
-  assign io_debug_bus_dat2 = io_bus_dat2;
-  assign io_debug_bus_addr = io_bus_addr;
-  assign io_debug_inst_out = io_ctrl_inst;
   assign io_bus_we = bus_we;
   assign bus_we = inst_we ? 1'h0 : T0;
   assign T0 = T169 ? 1'h0 : T1;
@@ -547,7 +537,7 @@ module Ctrlpath(input clk, input reset,
   assign T20 = T149 ? 1'h0 : T21;
   assign T21 = T148 ? 1'h0 : T22;
   assign T22 = T147 ? 1'h0 : T23;
-  assign T23 = T146 ? 1'h1 : T24;
+  assign T23 = T146 ? 1'h0 : T24;
   assign T24 = T145 ? 1'h0 : T25;
   assign T25 = T144 ? 1'h0 : T26;
   assign T26 = state == 32'h7a;
@@ -1461,12 +1451,7 @@ module Core(input clk, input reset,
     input [31:0] io_bus_dat4,
     output io_bus_sel,
     output io_bus_we,
-    input  io_bus_ack,
-    output[31:0] io_debug_inst_out,
-    output[31:0] io_debug_bus_addr,
-    output[31:0] io_debug_bus_dat2,
-    output[31:0] io_debug_bus_dat4,
-    output[31:0] io_debug_pc_out
+    input  io_bus_ack
 );
 
   wire[31:0] cpath_io_ctrl_bus_data;
@@ -1483,22 +1468,12 @@ module Core(input clk, input reset,
   wire[31:0] cpath_io_bus_dat2;
   wire cpath_io_bus_sel;
   wire cpath_io_bus_we;
-  wire[31:0] cpath_io_debug_inst_out;
-  wire[31:0] cpath_io_debug_bus_addr;
-  wire[31:0] cpath_io_debug_bus_dat2;
-  wire[31:0] cpath_io_debug_bus_dat4;
-  wire[31:0] cpath_io_debug_pc_out;
   wire[31:0] dpath_io_inst;
   wire[31:0] dpath_io_pc_out;
   wire[31:0] dpath_io_alu_out;
   wire[31:0] dpath_io_data_out;
 
 
-  assign io_debug_pc_out = cpath_io_debug_pc_out;
-  assign io_debug_bus_dat4 = cpath_io_debug_bus_dat4;
-  assign io_debug_bus_dat2 = cpath_io_debug_bus_dat2;
-  assign io_debug_bus_addr = cpath_io_debug_bus_addr;
-  assign io_debug_inst_out = cpath_io_debug_inst_out;
   assign io_bus_we = cpath_io_bus_we;
   assign io_bus_sel = cpath_io_bus_sel;
   assign io_bus_dat2 = cpath_io_bus_dat2;
@@ -1523,12 +1498,7 @@ module Core(input clk, input reset,
        .io_bus_dat4( io_bus_dat4 ),
        .io_bus_sel( cpath_io_bus_sel ),
        .io_bus_we( cpath_io_bus_we ),
-       .io_bus_ack( io_bus_ack ),
-       .io_debug_inst_out( cpath_io_debug_inst_out ),
-       .io_debug_bus_addr( cpath_io_debug_bus_addr ),
-       .io_debug_bus_dat2( cpath_io_debug_bus_dat2 ),
-       .io_debug_bus_dat4( cpath_io_debug_bus_dat4 ),
-       .io_debug_pc_out( cpath_io_debug_pc_out )
+       .io_bus_ack( io_bus_ack )
   );
   Datapath dpath(.clk(clk), .reset(reset),
        .io_bus_data( cpath_io_ctrl_bus_data ),
@@ -2162,10 +2132,10 @@ module VGA_Ctrl(input clk, input reset,
   wire T11;
   wire T12;
   wire T13;
-  reg  p_counter;
-  wire T79;
-  wire T14;
-  wire T15;
+  reg [1:0] p_counter;
+  wire[1:0] T79;
+  wire[1:0] T14;
+  wire[1:0] T15;
   wire T16;
   wire T17;
   wire[31:0] T18;
@@ -2259,12 +2229,12 @@ module VGA_Ctrl(input clk, input reset,
   assign T10 = h_counter + 32'h1;
   assign T11 = T13 & T12;
   assign T12 = T7 ^ 1'h1;
-  assign T13 = p_counter == 1'h0;
-  assign T79 = reset ? 1'h0 : T14;
-  assign T14 = T16 ? T15 : 1'h0;
-  assign T15 = p_counter + 1'h1;
+  assign T13 = p_counter == 2'h0;
+  assign T79 = reset ? 2'h0 : T14;
+  assign T14 = T16 ? T15 : 2'h0;
+  assign T15 = p_counter + 2'h1;
   assign T16 = T17 ^ 1'h1;
-  assign T17 = p_counter == 1'h1;
+  assign T17 = p_counter == 2'h3;
   assign T18 = v_counter + 32'h1;
   assign T19 = T6 & T20;
   assign T20 = T5 ^ 1'h1;
@@ -2350,11 +2320,11 @@ module VGA_Ctrl(input clk, input reset,
       h_counter <= 32'h0;
     end
     if(reset) begin
-      p_counter <= 1'h0;
+      p_counter <= 2'h0;
     end else if(T16) begin
       p_counter <= T15;
     end else begin
-      p_counter <= 1'h0;
+      p_counter <= 2'h0;
     end
   end
 endmodule
@@ -2631,64 +2601,151 @@ module WB_Keyboard_Dev(input clk, input reset,
   wire[31:0] T1;
   wire[31:0] T2;
   wire[31:0] T3;
-  reg [31:0] c_count;
-  wire[31:0] T46;
   wire[31:0] T4;
   wire[31:0] T5;
-  wire T6;
-  wire T7;
+  wire[31:0] T6;
+  wire[31:0] T7;
   wire T8;
-  wire T9;
-  wire[1:0] T10;
-  wire[31:0] T47;
-  reg [15:0] cooked;
-  wire[15:0] T48;
-  wire[15:0] T11;
-  wire[15:0] T49;
-  wire[8:0] T12;
-  wire[8:0] T13;
-  reg  p_f0;
-  wire T50;
+  wire[2:0] T9;
+  wire T10;
+  wire T11;
+  reg [31:0] k_clk_test_reg;
+  wire[31:0] T130;
+  wire[31:0] T12;
+  wire[31:0] T13;
   wire T14;
-  wire T15;
-  wire T16;
-  wire[8:0] T51;
-  wire[5:0] cooked_next;
-  wire[5:0] T17;
-  wire[5:0] T18;
-  wire[5:0] T19;
-  wire[5:0] T20;
-  wire[5:0] T21;
-  wire[5:0] T22;
-  wire[5:0] T23;
-  wire[5:0] T24;
-  wire[5:0] T25;
-  wire[5:0] T52;
-  wire[3:0] T26;
-  wire[3:0] T27;
-  wire T28;
-  wire T29;
-  wire T30;
-  wire T31;
-  wire T32;
-  wire T33;
-  wire T34;
-  wire T35;
-  wire T36;
-  wire T37;
-  wire T38;
-  wire T39;
-  wire T40;
+  reg [31:0] c_count;
+  wire[31:0] T131;
+  wire[31:0] T15;
+  wire[31:0] T16;
+  wire T17;
+  wire T18;
+  wire T19;
+  wire[6:0] cooked_next;
+  wire[6:0] T20;
+  wire[6:0] T21;
+  wire[6:0] T22;
+  wire[6:0] T23;
+  wire[6:0] T24;
+  wire[6:0] T25;
+  wire[6:0] T26;
+  wire[6:0] T27;
+  wire[6:0] T28;
+  wire[6:0] T29;
+  wire[6:0] T30;
+  wire[6:0] T31;
+  wire[6:0] T32;
+  wire[6:0] T33;
+  wire[6:0] T34;
+  wire[6:0] T35;
+  wire[6:0] T36;
+  wire[6:0] T37;
+  wire[6:0] T38;
+  wire[6:0] T39;
+  wire[6:0] T40;
+  wire[6:0] T41;
+  wire[6:0] T42;
+  wire[6:0] T43;
+  wire[6:0] T44;
+  wire[6:0] T45;
+  wire[6:0] T46;
+  wire[6:0] T47;
+  wire[6:0] T48;
+  wire[6:0] T49;
+  wire[6:0] T50;
+  wire[6:0] T51;
+  wire[6:0] T52;
+  wire[6:0] T53;
+  wire[6:0] T54;
+  wire[6:0] T55;
+  wire[6:0] T56;
+  wire[6:0] T57;
+  wire[6:0] T58;
+  wire[6:0] T59;
+  wire[6:0] T60;
+  wire[6:0] T132;
+  wire[5:0] T61;
+  wire[5:0] T62;
+  wire[5:0] T63;
+  wire[5:0] T64;
+  wire[5:0] T133;
+  wire[3:0] T65;
+  wire[3:0] T66;
+  wire T67;
+  wire T68;
+  wire T69;
+  wire T70;
+  wire T71;
+  wire T72;
+  wire T73;
+  wire T74;
+  wire T75;
+  wire T76;
+  wire T77;
+  wire T78;
+  wire T79;
+  wire T80;
+  wire T81;
+  wire T82;
+  wire T83;
+  wire T84;
+  wire T85;
+  wire T86;
+  wire T87;
+  wire T88;
+  wire T89;
+  wire T90;
+  wire T91;
+  wire T92;
+  wire T93;
+  wire T94;
+  wire T95;
+  wire T96;
+  wire T97;
+  wire T98;
+  wire T99;
+  wire T100;
+  wire T101;
+  wire T102;
+  wire T103;
+  wire T104;
+  wire T105;
+  wire T106;
+  wire T107;
+  wire T108;
+  wire T109;
+  wire T110;
+  wire T111;
+  wire T112;
+  wire T113;
+  wire T114;
+  wire T115;
+  wire T116;
+  wire T117;
+  wire[31:0] T134;
+  reg [15:0] cooked;
+  wire[15:0] T135;
+  wire[15:0] T118;
+  wire[15:0] T136;
+  wire[8:0] T119;
+  wire[8:0] T120;
+  reg  p_f0;
+  wire T137;
+  wire T121;
+  wire T122;
+  wire T123;
+  wire[8:0] T138;
+  wire T124;
   reg [31:0] r_count;
-  wire[31:0] T53;
-  wire[31:0] T41;
-  wire[31:0] T42;
-  wire T43;
-  wire[31:0] T54;
+  wire[31:0] T139;
+  wire[31:0] T125;
+  wire[31:0] T126;
+  wire T127;
+  wire[31:0] T140;
   reg [7:0] raw;
-  wire[7:0] T55;
-  wire[7:0] T44;
-  wire T45;
+  wire[7:0] T141;
+  wire[7:0] T128;
+  wire T129;
   wire[7:0] kb_io_ctrl_data;
   wire kb_io_ctrl_interrupt;
 
@@ -2697,6 +2754,7 @@ module WB_Keyboard_Dev(input clk, input reset,
   integer initvar;
   initial begin
     #0.002;
+    k_clk_test_reg = {1{$random}};
     c_count = {1{$random}};
     cooked = {1{$random}};
     p_f0 = {1{$random}};
@@ -2708,63 +2766,149 @@ module WB_Keyboard_Dev(input clk, input reset,
 
   assign io_bus_ack = 1'h1;
   assign io_bus_dat4 = T0;
-  assign T0 = T45 ? T54 : T1;
-  assign T1 = T43 ? r_count : T2;
-  assign T2 = T40 ? T47 : T3;
-  assign T3 = T9 ? c_count : 32'h0;
-  assign T46 = reset ? 32'h0 : T4;
-  assign T4 = T6 ? T5 : c_count;
-  assign T5 = c_count + 32'h1;
-  assign T6 = kb_io_ctrl_interrupt & T7;
-  assign T7 = T8 ^ 1'h1;
-  assign T8 = kb_io_ctrl_data == 8'hf0;
-  assign T9 = T10 == 2'h3;
-  assign T10 = io_bus_addr[1'h1:1'h0];
-  assign T47 = {16'h0, cooked};
-  assign T48 = reset ? 16'h0 : T11;
-  assign T11 = T6 ? T49 : cooked;
-  assign T49 = {7'h0, T12};
-  assign T12 = T51 + T13;
-  assign T13 = p_f0 << 4'h8;
-  assign T50 = reset ? 1'h0 : T14;
-  assign T14 = T6 ? 1'h0 : T15;
-  assign T15 = T16 ? 1'h1 : p_f0;
-  assign T16 = kb_io_ctrl_interrupt & T8;
-  assign T51 = {3'h0, cooked_next};
-  assign cooked_next = T39 ? 6'h31 : T17;
-  assign T17 = T38 ? 6'h32 : T18;
-  assign T18 = T37 ? 6'h33 : T19;
-  assign T19 = T36 ? 6'h34 : T20;
-  assign T20 = T35 ? 6'h35 : T21;
-  assign T21 = T34 ? 6'h36 : T22;
-  assign T22 = T33 ? 6'h37 : T23;
-  assign T23 = T32 ? 6'h38 : T24;
-  assign T24 = T31 ? 6'h39 : T25;
-  assign T25 = T30 ? 6'h30 : T52;
-  assign T52 = {2'h0, T26};
-  assign T26 = T29 ? 4'h8 : T27;
-  assign T27 = T28 ? 4'hd : 4'h0;
-  assign T28 = kb_io_ctrl_data == 8'h5a;
-  assign T29 = kb_io_ctrl_data == 8'h66;
-  assign T30 = kb_io_ctrl_data == 8'h45;
-  assign T31 = kb_io_ctrl_data == 8'h46;
-  assign T32 = kb_io_ctrl_data == 8'h3e;
-  assign T33 = kb_io_ctrl_data == 8'h3d;
-  assign T34 = kb_io_ctrl_data == 8'h36;
-  assign T35 = kb_io_ctrl_data == 8'h2e;
-  assign T36 = kb_io_ctrl_data == 8'h25;
-  assign T37 = kb_io_ctrl_data == 8'h26;
-  assign T38 = kb_io_ctrl_data == 8'h1e;
-  assign T39 = kb_io_ctrl_data == 8'h16;
-  assign T40 = T10 == 2'h2;
-  assign T53 = reset ? 32'h0 : T41;
-  assign T41 = kb_io_ctrl_interrupt ? T42 : r_count;
-  assign T42 = r_count + 32'h1;
-  assign T43 = T10 == 2'h1;
-  assign T54 = {24'h0, raw};
-  assign T55 = reset ? 8'h0 : T44;
-  assign T44 = kb_io_ctrl_interrupt ? kb_io_ctrl_data : raw;
-  assign T45 = T10 == 2'h0;
+  assign T0 = T129 ? T140 : T1;
+  assign T1 = T127 ? r_count : T2;
+  assign T2 = T124 ? T134 : T3;
+  assign T3 = T117 ? c_count : T4;
+  assign T4 = T14 ? k_clk_test_reg : T5;
+  assign T5 = T11 ? k_clk_test_reg : T6;
+  assign T6 = T10 ? k_clk_test_reg : T7;
+  assign T7 = T8 ? k_clk_test_reg : 32'h0;
+  assign T8 = T9 == 3'h7;
+  assign T9 = io_bus_addr[2'h2:1'h0];
+  assign T10 = T9 == 3'h6;
+  assign T11 = T9 == 3'h5;
+  assign T130 = reset ? 32'h0 : T12;
+  assign T12 = io_keyboard_kb_clk ? T13 : k_clk_test_reg;
+  assign T13 = k_clk_test_reg + 32'h1;
+  assign T14 = T9 == 3'h4;
+  assign T131 = reset ? 32'h0 : T15;
+  assign T15 = T17 ? T16 : c_count;
+  assign T16 = c_count + 32'h1;
+  assign T17 = kb_io_ctrl_interrupt & T18;
+  assign T18 = T115 & T19;
+  assign T19 = cooked_next != 7'h0;
+  assign cooked_next = T114 ? 7'h31 : T20;
+  assign T20 = T113 ? 7'h32 : T21;
+  assign T21 = T112 ? 7'h33 : T22;
+  assign T22 = T111 ? 7'h34 : T23;
+  assign T23 = T110 ? 7'h35 : T24;
+  assign T24 = T109 ? 7'h36 : T25;
+  assign T25 = T108 ? 7'h37 : T26;
+  assign T26 = T107 ? 7'h38 : T27;
+  assign T27 = T106 ? 7'h39 : T28;
+  assign T28 = T105 ? 7'h30 : T29;
+  assign T29 = T104 ? 7'h2d : T30;
+  assign T30 = T103 ? 7'h2b : T31;
+  assign T31 = T102 ? 7'h71 : T32;
+  assign T32 = T101 ? 7'h77 : T33;
+  assign T33 = T100 ? 7'h65 : T34;
+  assign T34 = T99 ? 7'h72 : T35;
+  assign T35 = T98 ? 7'h74 : T36;
+  assign T36 = T97 ? 7'h79 : T37;
+  assign T37 = T96 ? 7'h75 : T38;
+  assign T38 = T95 ? 7'h69 : T39;
+  assign T39 = T94 ? 7'h6f : T40;
+  assign T40 = T93 ? 7'h70 : T41;
+  assign T41 = T92 ? 7'h5b : T42;
+  assign T42 = T91 ? 7'h5d : T43;
+  assign T43 = T90 ? 7'h61 : T44;
+  assign T44 = T89 ? 7'h73 : T45;
+  assign T45 = T88 ? 7'h64 : T46;
+  assign T46 = T87 ? 7'h66 : T47;
+  assign T47 = T86 ? 7'h67 : T48;
+  assign T48 = T85 ? 7'h68 : T49;
+  assign T49 = T84 ? 7'h6a : T50;
+  assign T50 = T83 ? 7'h6b : T51;
+  assign T51 = T82 ? 7'h6c : T52;
+  assign T52 = T81 ? 7'h3b : T53;
+  assign T53 = T80 ? 7'h27 : T54;
+  assign T54 = T79 ? 7'h7a : T55;
+  assign T55 = T78 ? 7'h78 : T56;
+  assign T56 = T77 ? 7'h63 : T57;
+  assign T57 = T76 ? 7'h76 : T58;
+  assign T58 = T75 ? 7'h62 : T59;
+  assign T59 = T74 ? 7'h6e : T60;
+  assign T60 = T73 ? 7'h6d : T132;
+  assign T132 = {1'h0, T61};
+  assign T61 = T72 ? 6'h2c : T62;
+  assign T62 = T71 ? 6'h2e : T63;
+  assign T63 = T70 ? 6'h2f : T64;
+  assign T64 = T69 ? 6'h20 : T133;
+  assign T133 = {2'h0, T65};
+  assign T65 = T68 ? 4'h8 : T66;
+  assign T66 = T67 ? 4'ha : 4'h0;
+  assign T67 = kb_io_ctrl_data == 8'h5a;
+  assign T68 = kb_io_ctrl_data == 8'h66;
+  assign T69 = kb_io_ctrl_data == 8'h29;
+  assign T70 = kb_io_ctrl_data == 8'h4a;
+  assign T71 = kb_io_ctrl_data == 8'h49;
+  assign T72 = kb_io_ctrl_data == 8'h41;
+  assign T73 = kb_io_ctrl_data == 8'h3a;
+  assign T74 = kb_io_ctrl_data == 8'h31;
+  assign T75 = kb_io_ctrl_data == 8'h32;
+  assign T76 = kb_io_ctrl_data == 8'h2a;
+  assign T77 = kb_io_ctrl_data == 8'h21;
+  assign T78 = kb_io_ctrl_data == 8'h22;
+  assign T79 = kb_io_ctrl_data == 8'h1a;
+  assign T80 = kb_io_ctrl_data == 8'h52;
+  assign T81 = kb_io_ctrl_data == 8'h4c;
+  assign T82 = kb_io_ctrl_data == 8'h4b;
+  assign T83 = kb_io_ctrl_data == 8'h42;
+  assign T84 = kb_io_ctrl_data == 8'h3b;
+  assign T85 = kb_io_ctrl_data == 8'h33;
+  assign T86 = kb_io_ctrl_data == 8'h34;
+  assign T87 = kb_io_ctrl_data == 8'h2b;
+  assign T88 = kb_io_ctrl_data == 8'h23;
+  assign T89 = kb_io_ctrl_data == 8'h1b;
+  assign T90 = kb_io_ctrl_data == 8'h1c;
+  assign T91 = kb_io_ctrl_data == 8'h5b;
+  assign T92 = kb_io_ctrl_data == 8'h54;
+  assign T93 = kb_io_ctrl_data == 8'h4d;
+  assign T94 = kb_io_ctrl_data == 8'h44;
+  assign T95 = kb_io_ctrl_data == 8'h43;
+  assign T96 = kb_io_ctrl_data == 8'h3c;
+  assign T97 = kb_io_ctrl_data == 8'h35;
+  assign T98 = kb_io_ctrl_data == 8'h2c;
+  assign T99 = kb_io_ctrl_data == 8'h2d;
+  assign T100 = kb_io_ctrl_data == 8'h24;
+  assign T101 = kb_io_ctrl_data == 8'h1d;
+  assign T102 = kb_io_ctrl_data == 8'h15;
+  assign T103 = kb_io_ctrl_data == 8'h55;
+  assign T104 = kb_io_ctrl_data == 8'h4e;
+  assign T105 = kb_io_ctrl_data == 8'h45;
+  assign T106 = kb_io_ctrl_data == 8'h46;
+  assign T107 = kb_io_ctrl_data == 8'h3e;
+  assign T108 = kb_io_ctrl_data == 8'h3d;
+  assign T109 = kb_io_ctrl_data == 8'h36;
+  assign T110 = kb_io_ctrl_data == 8'h2e;
+  assign T111 = kb_io_ctrl_data == 8'h25;
+  assign T112 = kb_io_ctrl_data == 8'h26;
+  assign T113 = kb_io_ctrl_data == 8'h1e;
+  assign T114 = kb_io_ctrl_data == 8'h16;
+  assign T115 = T116 ^ 1'h1;
+  assign T116 = kb_io_ctrl_data == 8'hf0;
+  assign T117 = T9 == 3'h3;
+  assign T134 = {16'h0, cooked};
+  assign T135 = reset ? 16'h0 : T118;
+  assign T118 = T17 ? T136 : cooked;
+  assign T136 = {7'h0, T119};
+  assign T119 = T138 + T120;
+  assign T120 = p_f0 << 4'h8;
+  assign T137 = reset ? 1'h0 : T121;
+  assign T121 = T17 ? 1'h0 : T122;
+  assign T122 = T123 ? 1'h1 : p_f0;
+  assign T123 = kb_io_ctrl_interrupt & T116;
+  assign T138 = {2'h0, cooked_next};
+  assign T124 = T9 == 3'h2;
+  assign T139 = reset ? 32'h0 : T125;
+  assign T125 = kb_io_ctrl_interrupt ? T126 : r_count;
+  assign T126 = r_count + 32'h1;
+  assign T127 = T9 == 3'h1;
+  assign T140 = {24'h0, raw};
+  assign T141 = reset ? 8'h0 : T128;
+  assign T128 = kb_io_ctrl_interrupt ? kb_io_ctrl_data : raw;
+  assign T129 = T9 == 3'h0;
   Keyboard_Ctrl kb(.clk(clk),
        .io_keyboard_kb_clk( io_keyboard_kb_clk ),
        .io_keyboard_kb_data( io_keyboard_kb_data ),
@@ -2774,26 +2918,31 @@ module WB_Keyboard_Dev(input clk, input reset,
 
   always @(posedge clk) begin
     if(reset) begin
+      k_clk_test_reg <= 32'h0;
+    end else if(io_keyboard_kb_clk) begin
+      k_clk_test_reg <= T13;
+    end
+    if(reset) begin
       c_count <= 32'h0;
-    end else if(T6) begin
-      c_count <= T5;
+    end else if(T17) begin
+      c_count <= T16;
     end
     if(reset) begin
       cooked <= 16'h0;
-    end else if(T6) begin
-      cooked <= T49;
+    end else if(T17) begin
+      cooked <= T136;
     end
     if(reset) begin
       p_f0 <= 1'h0;
-    end else if(T6) begin
+    end else if(T17) begin
       p_f0 <= 1'h0;
-    end else if(T16) begin
+    end else if(T123) begin
       p_f0 <= 1'h1;
     end
     if(reset) begin
       r_count <= 32'h0;
     end else if(kb_io_ctrl_interrupt) begin
-      r_count <= T42;
+      r_count <= T126;
     end
     if(reset) begin
       raw <= 8'h0;
@@ -3088,23 +3237,13 @@ module SOC(input clk, input reset,
     output io_devices_RAM_we,
     input [31:0] io_devices_RAM_douta,
     input  io_devices_KEYBOARD_kb_clk,
-    input  io_devices_KEYBOARD_kb_data,
-    output[31:0] io_debug_inst_out,
-    output[31:0] io_debug_bus_addr,
-    output[31:0] io_debug_bus_dat2,
-    output[31:0] io_debug_bus_dat4,
-    output[31:0] io_debug_pc_out
+    input  io_devices_KEYBOARD_kb_data
 );
 
   wire[31:0] cpu_io_bus_addr;
   wire[31:0] cpu_io_bus_dat2;
   wire cpu_io_bus_sel;
   wire cpu_io_bus_we;
-  wire[31:0] cpu_io_debug_inst_out;
-  wire[31:0] cpu_io_debug_bus_addr;
-  wire[31:0] cpu_io_debug_bus_dat2;
-  wire[31:0] cpu_io_debug_bus_dat4;
-  wire[31:0] cpu_io_debug_pc_out;
   wire[31:0] dev_io_bus_dat4;
   wire dev_io_bus_ack;
   wire[7:0] dev_io_devices_LED;
@@ -3119,11 +3258,6 @@ module SOC(input clk, input reset,
   wire dev_io_devices_RAM_we;
 
 
-  assign io_debug_pc_out = cpu_io_debug_pc_out;
-  assign io_debug_bus_dat4 = cpu_io_debug_bus_dat4;
-  assign io_debug_bus_dat2 = cpu_io_debug_bus_dat2;
-  assign io_debug_bus_addr = cpu_io_debug_bus_addr;
-  assign io_debug_inst_out = cpu_io_debug_inst_out;
   assign io_devices_RAM_we = dev_io_devices_RAM_we;
   assign io_devices_RAM_dina = dev_io_devices_RAM_dina;
   assign io_devices_RAM_addra = dev_io_devices_RAM_addra;
@@ -3140,12 +3274,7 @@ module SOC(input clk, input reset,
        .io_bus_dat4( dev_io_bus_dat4 ),
        .io_bus_sel( cpu_io_bus_sel ),
        .io_bus_we( cpu_io_bus_we ),
-       .io_bus_ack( dev_io_bus_ack ),
-       .io_debug_inst_out( cpu_io_debug_inst_out ),
-       .io_debug_bus_addr( cpu_io_debug_bus_addr ),
-       .io_debug_bus_dat2( cpu_io_debug_bus_dat2 ),
-       .io_debug_bus_dat4( cpu_io_debug_bus_dat4 ),
-       .io_debug_pc_out( cpu_io_debug_pc_out )
+       .io_bus_ack( dev_io_bus_ack )
   );
   Devices dev(.clk(clk), .reset(reset),
        .io_bus_addr( cpu_io_bus_addr ),

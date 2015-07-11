@@ -59,8 +59,8 @@ module Seven_Segment_Wrapper(
     .graph(1'b0),
     .high_degree(high_degree),
     .scanning(counter[20:19]),
-    .pointing(2'b0),
-    .blinking(2'b0),
+    .pointing(4'b0),
+    .blinking(4'b0),
     .AN(AN),
     .SEGMENT(SEGMENT)
   );

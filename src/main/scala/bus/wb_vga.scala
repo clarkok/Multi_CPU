@@ -29,8 +29,8 @@ class VGA_Ctrl extends Module {
     }
     
     // pixel counter
-    val p_counter = Reg(init = UInt(0, width=1))
-    when(p_counter === UInt(1))
+    val p_counter = Reg(init = UInt(0, width=2))
+    when(p_counter === UInt(3))
         { p_counter := UInt(0) }
     .otherwise
         { p_counter := p_counter + UInt(1) }

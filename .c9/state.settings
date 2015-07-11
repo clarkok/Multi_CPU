@@ -84,15 +84,15 @@
             "@ace": 2,
             "@acestatus": 1,
             "@divider": 4,
-            "@document": 14,
+            "@document": 28,
             "@form": 4,
             "@immediate": 1,
             "@menu": 5,
             "@menuitem": 13,
             "@pane": 6,
-            "@session": 13,
-            "@tab": 3,
-            "@undoManager": 14
+            "@session": 27,
+            "@tab": 17,
+            "@undoManager": 28
         }
     },
     "findinfiles": {
@@ -109,7 +109,7 @@
     },
     "panecycle": {
         "json()": [
-            "tab47",
+            "tab13",
             "tab20"
         ]
     },
@@ -193,17 +193,18 @@
     },
     "tabs": {
         "json()": {
-            "focus": "/src/main/scala/bus/devices.scala",
+            "focus": "/src/main/scala/bus/wb_keyboard.scala",
             "meta": {
                 "accessList": [
+                    "tab13",
+                    "tab16",
                     "tab47",
-                    "tab40",
+                    "tab14",
+                    "tab15",
                     "tab39",
-                    "tab2",
-                    "tab54",
                     "tab37",
-                    "tab53",
-                    "tab50"
+                    "tab54",
+                    "tab40"
                 ]
             },
             "name": "pane2",
@@ -218,7 +219,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1435594709000
+                            "timestamp": 1436517733768
                         },
                         "filter": true,
                         "title": "core.scala",
@@ -238,7 +239,7 @@
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1436474118866
+                            "timestamp": 1436517751721
                         },
                         "filter": true,
                         "title": "ctrlpath.scala",
@@ -293,8 +294,7 @@
                     "name": "tab47",
                     "path": "/src/main/scala/bus/devices.scala",
                     "className": [
-                        "tab47",
-                        "focus"
+                        "tab47"
                     ],
                     "document": {
                         "changed": false,
@@ -307,23 +307,44 @@
                         "ace": {}
                     },
                     "editorType": "ace",
+                    "active": false
+                },
+                {
+                    "type": "tab",
+                    "name": "tab13",
+                    "path": "/src/main/scala/bus/wb_keyboard.scala",
+                    "className": [
+                        "tab13",
+                        "focus"
+                    ],
+                    "document": {
+                        "changed": false,
+                        "meta": {
+                            "timestamp": 1436524829749
+                        },
+                        "filter": true,
+                        "title": "wb_keyboard.scala",
+                        "tooltip": "/src/main/scala/bus/wb_keyboard.scala",
+                        "ace": {}
+                    },
+                    "editorType": "ace",
                     "active": true
                 },
                 {
                     "type": "tab",
-                    "name": "tab50",
-                    "path": "/verilog/ram_wrap.v",
+                    "name": "tab14",
+                    "path": "/src/main/scala/soc.scala",
                     "className": [
-                        "tab50"
+                        "tab14"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1436338663000
+                            "timestamp": 1436524746354
                         },
                         "filter": true,
-                        "title": "ram_wrap.v",
-                        "tooltip": "/verilog/ram_wrap.v",
+                        "title": "soc.scala",
+                        "tooltip": "/src/main/scala/soc.scala",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -331,39 +352,19 @@
                 },
                 {
                     "type": "tab",
-                    "name": "tab53",
-                    "path": "/src/main/scala/mux.scala",
+                    "name": "tab16",
+                    "path": "/src/main/scala/bus/wb_vga.scala",
                     "className": [
-                        "tab53"
+                        "tab16"
                     ],
                     "document": {
                         "changed": false,
                         "meta": {
-                            "timestamp": 1436426212000
+                            "timestamp": 1436482185000
                         },
                         "filter": true,
-                        "title": "mux.scala",
-                        "tooltip": "/src/main/scala/mux.scala",
-                        "ace": {}
-                    },
-                    "editorType": "ace",
-                    "active": false
-                },
-                {
-                    "type": "tab",
-                    "name": "tab2",
-                    "path": "/src/main/scala/bus/wb_counter_dev.scala",
-                    "className": [
-                        "tab2"
-                    ],
-                    "document": {
-                        "changed": false,
-                        "meta": {
-                            "timestamp": 1436478745490
-                        },
-                        "filter": true,
-                        "title": "wb_counter_dev.scala",
-                        "tooltip": "/src/main/scala/bus/wb_counter_dev.scala",
+                        "title": "wb_vga.scala",
+                        "tooltip": "/src/main/scala/bus/wb_vga.scala",
                         "ace": {}
                     },
                     "editorType": "ace",
@@ -377,7 +378,7 @@
     },
     "tree_selection": {
         "json()": [
-            "/src/main/scala/bus/wb_counter_dev.scala"
+            "/src/main/scala/bus/wb_keyboard.scala"
         ]
     }
 }

@@ -11,7 +11,6 @@ class Debug_IO extends Bundle {
 class SOC extends Module {
     val io = new Bundle {
         val devices = new Devices_IO()
-        val debug = new Debug_IO()
     }
     
     val cpu = Module(new Core())
@@ -19,6 +18,4 @@ class SOC extends Module {
     
     io.devices <> dev.io.devices
     cpu.io.bus <> dev.io.bus
-    
-    io.debug := cpu.io.debug
 }
